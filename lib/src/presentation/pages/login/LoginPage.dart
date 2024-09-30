@@ -56,7 +56,12 @@ class _LoginpageState extends State<Loginpage> {
             builder: (context, state){
               final responseState = state.response;
               if(responseState is Loading){
-                return Center(child: CircularProgressIndicator());
+                return Stack(
+                  children: [
+                    Logincontent(_bloc, state),
+                    Center(child: CircularProgressIndicator())
+                  ],
+                );
               }
               return Logincontent(_bloc, state);
             }
