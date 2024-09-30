@@ -51,6 +51,17 @@ class Logincontent extends StatelessWidget {
     );
   }
 
+ Widget _imageBackground(BuildContext context){
+    return Image.asset(
+      'assets/img/background2.jpg',
+      width: MediaQuery.of(context).size.height,
+      height: MediaQuery.of(context).size.height,
+      fit: BoxFit.cover,
+      color: Colors.black54,
+      colorBlendMode: BlendMode.darken,
+    );
+  }
+
   Widget _iconPerson(){
     return Icon(
       Icons.person,
@@ -67,17 +78,6 @@ class Logincontent extends StatelessWidget {
         fontWeight: FontWeight.bold,
         color: Colors.white
       ),
-    );
-  }
-
-  Widget _imageBackground(BuildContext context){
-    return Image.asset(
-      'assets/img/background2.jpg',
-      width: MediaQuery.of(context).size.height,
-      height: MediaQuery.of(context).size.height,
-      fit: BoxFit.cover,
-      color: Colors.black54,
-      colorBlendMode: BlendMode.darken,
     );
   }
 
