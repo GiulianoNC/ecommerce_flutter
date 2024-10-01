@@ -1,3 +1,4 @@
+import 'package:ecommerce_flutter/src/domain/models/AuthResponse.dart';
 import 'package:ecommerce_flutter/src/domain/utils/Resource.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/login/bloc/LoginBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/login/LoginContent.dart';
@@ -45,11 +46,13 @@ class _LoginpageState extends State<Loginpage> {
               );
             }
             else if(responseState is Success){
-              _bloc?.add(LoginFormReset());
-               Fluttertoast.showToast(
-               msg: 'Login exitoso',
-               toastLength:Toast.LENGTH_LONG
-               );
+              final authResponse = responseState.data as AuthResponse;
+              //_bloc?.add(LoginFormReset());//reiniciar el forumlario
+              _bloc?.add(LoginSaveUserSession(authResponse: authResponse));//guardar el usuario en caso de que la respuesta sea exitosa
+
+              WidgetsBinding.instance.addPostFrameCallback((timeStamp){//enviar usuario a roles
+                  Navigator.pushNamed(context, 'roles');
+               });
             }
           },
           child: BlocBuilder<LoginBloc,LoginState>(

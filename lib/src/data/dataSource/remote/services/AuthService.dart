@@ -1,6 +1,5 @@
 import 'package:ecommerce_flutter/src/data/api/ApiConfig.dart';
 import 'package:ecommerce_flutter/src/domain/models/AuthResponse.dart';
-import 'package:ecommerce_flutter/src/domain/models/User.dart';
 import 'package:ecommerce_flutter/src/domain/utils/ListToString.dart';
 import 'package:ecommerce_flutter/src/domain/utils/Resource.dart';
 import 'dart:convert';

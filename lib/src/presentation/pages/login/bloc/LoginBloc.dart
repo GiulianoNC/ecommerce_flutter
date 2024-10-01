@@ -20,6 +20,7 @@ class LoginBloc extends Bloc<LoginEvent,LoginState>{
     on<PasswordChanged>(_onPasswordChanged);
     on<LoginSubmit>(_onLoginSubmit);
     on<LoginFormReset>(_onLoginFormReset);
+    on<LoginSaveUserSession>(_onLoginSaveUserSession);
 
   }
 
@@ -27,7 +28,22 @@ class LoginBloc extends Bloc<LoginEvent,LoginState>{
 
 
   Future<void> _onInitEvent (InitEvent event, Emitter<LoginState> emit) async{
+    AuthResponse? authResponse = await authusecases.getUserSession.run();
+    print('INICIO DE SESION: ${authResponse?.toJson()}');
     emit(state.copyWith(formKey: formKey));
+
+    if(authResponse != null ){
+          emit(
+            state.copyWith(
+              response: Success(authResponse),//Authresponse -> User y data
+              formKey: formKey
+              ),
+          );
+    }
+  }
+
+  Future<void> _onLoginSaveUserSession (LoginSaveUserSession event, Emitter<LoginState> emit) async{
+    await authusecases.saveUserSession.run(event.authResponse);
   }
 
   Future<void> _onLoginFormReset (LoginFormReset event, Emitter<LoginState> emit) async{
@@ -72,6 +88,6 @@ class LoginBloc extends Bloc<LoginEvent,LoginState>{
         response: response,
         formKey: formKey
         ),
-      );
+    );
   }  
 }

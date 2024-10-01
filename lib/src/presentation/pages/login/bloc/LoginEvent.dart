@@ -1,3 +1,4 @@
+import 'package:ecommerce_flutter/src/domain/models/AuthResponse.dart';
 import 'package:ecommerce_flutter/src/presentation/utils/BlocForItem.dart';
 import 'package:equatable/equatable.dart';
 
@@ -16,6 +17,14 @@ class InitEvent extends LoginEvent{
 //para resetear el formulario de login
 class LoginFormReset extends LoginEvent{
   const LoginFormReset();
+}
+
+class LoginSaveUserSession extends LoginEvent{
+  final AuthResponse authResponse;
+  const LoginSaveUserSession({required this.authResponse});
+
+  @override
+  List<Object?> get props => [authResponse];
 }
 
 //registrar primer evento de cambio de mail

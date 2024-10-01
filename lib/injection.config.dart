@@ -11,6 +11,7 @@
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
+import 'src/data/dataSource/local/SharedPref.dart' as _i344;
 import 'src/data/dataSource/remote/services/AuthService.dart' as _i204;
 import 'src/di/AppModule.dart' as _i199;
 import 'src/domain/repository/AuthRepository.dart' as _i1048;
@@ -29,6 +30,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     final appmodule = _$Appmodule();
     gh.factory<_i204.Authservice>(() => appmodule.authservice);
+    gh.factory<_i344.SharedPref>(() => appmodule.sharedPred);
     gh.factory<_i1048.AuthRepository>(() => appmodule.authRepository);
     gh.factory<_i715.Authusecases>(() => appmodule.authusecases);
     return this;
