@@ -4,6 +4,7 @@ import 'package:ecommerce_flutter/src/presentation/pages/admin/home/AdminHomePag
 import 'package:ecommerce_flutter/src/presentation/pages/client/home/ClientHomePage.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/login/LoginPage.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/profile/info/ProfileInfoPage.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/profile/update/ProfileUpdatePage.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/register/RegisterPage.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/roles/RolesPage.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,8 @@ class MyApp extends StatelessWidget {
           'roles':(BuildContext context) => Rolespage(),
           'client/home':(BuildContext context) => ClientHomePage(),
           'admin/home':(BuildContext context) => AdminHomePage(),
-          'profile/info':(BuildContext context) => ProfileInfoPage()
+          'profile/info':(BuildContext context) => ProfileInfoPage(),
+          'profile/update':(BuildContext context) => ProfileUpdatePage()
         },
       ),
     );

@@ -10,6 +10,10 @@ abstract class ProfileUpdateEvent extends Equatable{
   
 }
 
+class ProfileUpdateInitEvent extends ProfileUpdateEvent{
+  const ProfileUpdateInitEvent();
+}
+
 class ProfileUpdateNameChanged extends ProfileUpdateEvent{
 
   final BlocFormItem name;
