@@ -3,6 +3,9 @@ import 'package:ecommerce_flutter/src/presentation/pages/profile/update/bloc/Pro
 import 'package:ecommerce_flutter/src/presentation/utils/BlocForItem.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+
 
 class ProfileUpdateBloc extends Bloc<ProfileUpdateEvent, ProfileUpdateState>{
 
@@ -13,6 +16,8 @@ class ProfileUpdateBloc extends Bloc<ProfileUpdateEvent, ProfileUpdateState>{
     on<ProfileUpdateNameChanged>(_onNameChanged);
     on<ProfileUpdateLastNameChanged>(_onLastNameChanged);
     on<ProfileUpdatePhoneChanged>(_onPhoneChanged);
+    on<ProfileUpdatePickImage>(_onPickImage);
+    on<ProfileUpdateTakePhoto>(_onTakePhoto);
 
   }
 
@@ -59,4 +64,28 @@ class ProfileUpdateBloc extends Bloc<ProfileUpdateEvent, ProfileUpdateState>{
       )
     );
   }
+
+    Future<void>_onPickImage(ProfileUpdatePickImage event, Emitter<ProfileUpdateState>emit) async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    if(image != null){
+      emit(
+        state.copyWith(
+          image: File(image.path)
+        )
+      );
+    }
+  } 
+
+    Future<void>?_onTakePhoto(ProfileUpdateTakePhoto event, Emitter<ProfileUpdateState>emit) async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.camera);
+    if(image != null){
+      emit(
+        state.copyWith(
+          image: File(image.path)
+        )
+      );
+    }
+  } 
 }

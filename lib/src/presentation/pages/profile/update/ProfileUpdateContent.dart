@@ -51,18 +51,27 @@ class ProfileUpdateContent extends StatelessWidget {
   }
 
   Widget _imageProfile(){
-    return Container(
-      margin: EdgeInsets.only(top:100),
-      width: 150,
-      child: AspectRatio(
-        aspectRatio: 1/1,
-        child: ClipOval(
-          child: FadeInImage.assetNetwork(
-            placeholder: 'assets/img/user.png',
-            image: 'https://kenkarlo.com/assets/images/author/61460-gary-b.jpeg',
-            fit:BoxFit.cover,
-            fadeInDuration: Duration(seconds: 1),
-            ),
+    return GestureDetector(
+      onTap: (){
+        //bloc?.add(ProfileUpdatePickImage());//seleccionar imagen de la galeria
+        bloc?.add(ProfileUpdateTakePhoto());//tomar foto de la camara
+      },
+      child: Container(
+        margin: EdgeInsets.only(top:100),
+        width: 150,
+        child: AspectRatio(
+          aspectRatio: 1/1,
+          child: ClipOval(
+            child:state.image != null 
+            ?Image.file(state.image!,
+            fit: BoxFit.cover
+            ) : FadeInImage.assetNetwork(//si el ussuario eleijo de su galeria entonces vamos a msotrar la imagen seleccionada por el usuario, sino se quedara la imagen de la url o el asset img
+              placeholder: 'assets/img/user.png',
+              image: 'https://kenkarlo.com/assets/images/author/61460-gary-b.jpeg',
+              fit:BoxFit.cover,
+              fadeInDuration: Duration(seconds: 1),
+              ),
+          ),
         ),
       ),
     );
