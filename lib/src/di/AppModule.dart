@@ -5,6 +5,7 @@ import 'package:ecommerce_flutter/src/domain/repository/AuthRepository.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/auth/AuthUseCases.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/auth/GetUserSessionUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/auth/LoginUseCase.dart';
+import 'package:ecommerce_flutter/src/domain/userCases/auth/LogoutUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/auth/RegisterUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/auth/SaveUserSessionUseCase.dart';
 import 'package:injectable/injectable.dart';
@@ -27,6 +28,7 @@ abstract class Appmodule {
     login: LoginUsecase(authRepository),
     resgister: Registerusecase(authRepository),
     saveUserSession: SaveUserSessionUseCase(authRepository),
-    getUserSession: GetUserSessionUseCase(authRepository)
+    getUserSession: GetUserSessionUseCase(authRepository),
+    logout: LogoutUseCase(authRepository)
   );
 }

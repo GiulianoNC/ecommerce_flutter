@@ -51,7 +51,7 @@ class _LoginpageState extends State<Loginpage> {
               _bloc?.add(LoginSaveUserSession(authResponse: authResponse));//guardar el usuario en caso de que la respuesta sea exitosa
 
               WidgetsBinding.instance.addPostFrameCallback((timeStamp){//enviar usuario a roles
-                  Navigator.pushNamed(context, 'roles');
+                  Navigator.pushNamedAndRemoveUntil(context, 'roles', (route)=> false);
                });
             }
           },
