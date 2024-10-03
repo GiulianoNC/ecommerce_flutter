@@ -48,7 +48,7 @@ class ProfileInfoContent extends StatelessWidget {
         child: ClipOval(
           child: FadeInImage.assetNetwork(
             placeholder: 'assets/img/user.png',
-            image: 'https://kenkarlo.com/assets/images/author/61460-gary-b.jpeg',
+            image: 'https://firebasestorage.googleapis.com/v0/b/test-project-2d30f.appspot.com/o/profilleimage.jpg?alt=media&token=4f560d9f-ac42-4bbb-a43a-35c3fbd36f7b',
             fit:BoxFit.cover,
             fadeInDuration: Duration(seconds: 1),
             ),

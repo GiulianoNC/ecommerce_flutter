@@ -26,7 +26,7 @@ class Authrepositoryimpl implements AuthRepository {
   Future<AuthResponse?> getUserSession()async {
     final data = await sharedPref.read('user');
     if(data != null){
-      AuthResponse authResponse = AuthResponse.fromJson(await sharedPref.read('user'));
+      AuthResponse authResponse = AuthResponse.fromJson(data);
       return authResponse;
     }
     return null;

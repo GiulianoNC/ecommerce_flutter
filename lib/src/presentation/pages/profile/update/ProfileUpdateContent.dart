@@ -1,8 +1,9 @@
 import 'package:ecommerce_flutter/src/domain/models/User.dart';
-import 'package:ecommerce_flutter/src/presentation/pages/profile/update/bloc/ProfileUpdaeEvent.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/profile/update/bloc/ProfileUpdateEvent.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/profile/update/bloc/ProfileUpdateBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/profile/update/bloc/ProfileUpdateState.dart';
 import 'package:ecommerce_flutter/src/presentation/utils/BlocForItem.dart';
+import 'package:ecommerce_flutter/src/presentation/utils/SelectOptionImageDialog.dart';
 import 'package:ecommerce_flutter/src/presentation/widgets/Default_textfield.dart';
 import 'package:flutter/material.dart';
 
@@ -16,8 +17,9 @@ class ProfileUpdateContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-      body: Stack(
+    return  Form(
+      key: state.formKey,
+      child: Stack(
         alignment: Alignment.center,
         children: [
           _imageBackGround(context),
@@ -27,7 +29,7 @@ class ProfileUpdateContent extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  _imageProfile(),
+                  _imageProfile(context),
                   //Spacer(),
                   _cardProfileInfo(context)
                 ],
@@ -50,11 +52,14 @@ class ProfileUpdateContent extends StatelessWidget {
     );
   }
 
-  Widget _imageProfile(){
+  Widget _imageProfile(BuildContext context){
     return GestureDetector(
       onTap: (){
-        //bloc?.add(ProfileUpdatePickImage());//seleccionar imagen de la galeria
-        bloc?.add(ProfileUpdateTakePhoto());//tomar foto de la camara
+        SelectOptionImageDialog(
+          context,
+          (){bloc?.add(ProfileUpdatePickImage());},//seleccionar imagen de la galeria
+          (){bloc?.add(ProfileUpdateTakePhoto());}//tomar foto de la camara
+        );
       },
       child: Container(
         margin: EdgeInsets.only(top:100),
@@ -67,7 +72,7 @@ class ProfileUpdateContent extends StatelessWidget {
             fit: BoxFit.cover
             ) : FadeInImage.assetNetwork(//si el ussuario eleijo de su galeria entonces vamos a msotrar la imagen seleccionada por el usuario, sino se quedara la imagen de la url o el asset img
               placeholder: 'assets/img/user.png',
-              image: 'https://kenkarlo.com/assets/images/author/61460-gary-b.jpeg',
+              image: 'https://firebasestorage.googleapis.com/v0/b/test-project-2d30f.appspot.com/o/profilleimage.jpg?alt=media&token=4f560d9f-ac42-4bbb-a43a-35c3fbd36f7b',
               fit:BoxFit.cover,
               fadeInDuration: Duration(seconds: 1),
               ),
@@ -84,7 +89,7 @@ class ProfileUpdateContent extends StatelessWidget {
       child: FloatingActionButton(
         backgroundColor: Colors.black,
         onPressed: (){
-          
+          bloc?.add(ProfileUpdateFormSubmit());
         },
         child: Icon(Icons.check,
         color: Colors.white,

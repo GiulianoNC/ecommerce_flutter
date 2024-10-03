@@ -13,9 +13,12 @@ import 'package:injectable/injectable.dart' as _i526;
 
 import 'src/data/dataSource/local/SharedPref.dart' as _i344;
 import 'src/data/dataSource/remote/services/AuthService.dart' as _i204;
+import 'src/data/dataSource/remote/services/UsersService.dart' as _i430;
 import 'src/di/AppModule.dart' as _i199;
 import 'src/domain/repository/AuthRepository.dart' as _i1048;
+import 'src/domain/repository/UsersRepository.dart' as _i562;
 import 'src/domain/userCases/auth/AuthUseCases.dart' as _i715;
+import 'src/domain/userCases/users/UsersUseCases.dart' as _i364;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -29,10 +32,13 @@ extension GetItInjectableX on _i174.GetIt {
       environmentFilter,
     );
     final appmodule = _$Appmodule();
-    gh.factory<_i204.Authservice>(() => appmodule.authservice);
     gh.factory<_i344.SharedPref>(() => appmodule.sharedPred);
+    gh.factory<_i204.Authservice>(() => appmodule.authservice);
+    gh.factory<_i430.UsersService>(() => appmodule.usersService);
     gh.factory<_i1048.AuthRepository>(() => appmodule.authRepository);
+    gh.factory<_i562.UsersRepository>(() => appmodule.usersRepository);
     gh.factory<_i715.Authusecases>(() => appmodule.authusecases);
+    gh.factory<_i364.UsersUseCases>(() => appmodule.usersCases);
     return this;
   }
 }
