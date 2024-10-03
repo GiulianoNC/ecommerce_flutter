@@ -1,3 +1,5 @@
+import 'package:ecommerce_flutter/src/domain/models/AuthResponse.dart';
+import 'package:ecommerce_flutter/src/domain/userCases/auth/AuthUseCases.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/users/UsersUseCases.dart';
 import 'package:ecommerce_flutter/src/domain/utils/Resource.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/profile/update/bloc/ProfileUpdateEvent.dart';
@@ -12,10 +14,11 @@ import 'dart:io';
 class ProfileUpdateBloc extends Bloc<ProfileUpdateEvent, ProfileUpdateState>{
 
   UsersUseCases usersUseCases;
+  Authusecases authusecases;
   
   final formKey = GlobalKey<FormState>();
 
-  ProfileUpdateBloc(this.usersUseCases):super(ProfileUpdateState()){
+  ProfileUpdateBloc(this.usersUseCases,this.authusecases):super(ProfileUpdateState()){
     on<ProfileUpdateInitEvent>(_onInitEvent);
     on<ProfileUpdateNameChanged>(_onNameChanged);
     on<ProfileUpdateLastNameChanged>(_onLastNameChanged);
@@ -23,6 +26,7 @@ class ProfileUpdateBloc extends Bloc<ProfileUpdateEvent, ProfileUpdateState>{
     on<ProfileUpdatePickImage>(_onPickImage);
     on<ProfileUpdateTakePhoto>(_onTakePhoto);
     on<ProfileUpdateFormSubmit>(_onFormSubmit);
+    on<ProfileUpdateUserSession>(_onUpdateUserSession);
 
   }
 
@@ -52,7 +56,14 @@ class ProfileUpdateBloc extends Bloc<ProfileUpdateEvent, ProfileUpdateState>{
         formKey: formKey
       )
     );
-  
+  }
+
+  Future<void>?_onUpdateUserSession(ProfileUpdateUserSession event, Emitter<ProfileUpdateState>emit) async {
+    AuthResponse authResponse = await authusecases.getUserSession.run();//usuario de sesion
+    authResponse.user.name = event.user.name;//actualiza el nombre con el event nombre de la actualizacion
+    authResponse.user.lastname = event.user.lastname;
+    authResponse.user.phone = event.user.phone;
+    authResponse.user.image = event.user.image;
   }  
 
   Future<void>?_onNameChanged(ProfileUpdateNameChanged event, Emitter<ProfileUpdateState>emit){

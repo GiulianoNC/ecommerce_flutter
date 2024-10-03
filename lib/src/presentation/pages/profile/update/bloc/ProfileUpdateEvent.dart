@@ -11,6 +11,15 @@ abstract class ProfileUpdateEvent extends Equatable{
   
 }
 
+class ProfileUpdateUserSession extends ProfileUpdateEvent{
+  final User user;
+
+  const ProfileUpdateUserSession ({required this.user});
+
+  @override
+  List<Object?> get props => [user];
+}
+
 class ProfileUpdateInitEvent extends ProfileUpdateEvent{
   final User? user;
   const ProfileUpdateInitEvent({required this.user});

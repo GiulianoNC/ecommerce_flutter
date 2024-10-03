@@ -47,6 +47,8 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
               toastLength: Toast.LENGTH_LONG
             );
           }else if (responseState is Success){
+            User user = responseState.data as User;
+            _bloc?.add(ProfileUpdateUserSession(user: user));   
             Fluttertoast.showToast(
               msg: 'Actualizacion exitosa',
               toastLength: Toast.LENGTH_LONG

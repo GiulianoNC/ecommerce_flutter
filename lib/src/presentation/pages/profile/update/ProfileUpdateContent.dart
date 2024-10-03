@@ -71,8 +71,8 @@ class ProfileUpdateContent extends StatelessWidget {
             ?Image.file(state.image!,
             fit: BoxFit.cover
             ) : FadeInImage.assetNetwork(//si el ussuario eleijo de su galeria entonces vamos a msotrar la imagen seleccionada por el usuario, sino se quedara la imagen de la url o el asset img
-              placeholder: 'assets/img/user.png',
-              image: 'https://firebasestorage.googleapis.com/v0/b/test-project-2d30f.appspot.com/o/profilleimage.jpg?alt=media&token=4f560d9f-ac42-4bbb-a43a-35c3fbd36f7b',
+              placeholder: 'assets/img/user_image.png',
+              image: user!.image!,
               fit:BoxFit.cover,
               fadeInDuration: Duration(seconds: 1),
               ),
