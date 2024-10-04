@@ -4,6 +4,7 @@ import 'package:ecommerce_flutter/src/presentation/pages/profile/update/bloc/Pro
 import 'package:ecommerce_flutter/src/presentation/pages/profile/update/bloc/ProfileUpdateState.dart';
 import 'package:ecommerce_flutter/src/presentation/utils/BlocForItem.dart';
 import 'package:ecommerce_flutter/src/presentation/utils/SelectOptionImageDialog.dart';
+import 'package:ecommerce_flutter/src/presentation/widgets/DefaultIconBack.dart';
 import 'package:ecommerce_flutter/src/presentation/widgets/Default_textfield.dart';
 import 'package:flutter/material.dart';
 
@@ -23,6 +24,7 @@ class ProfileUpdateContent extends StatelessWidget {
         alignment: Alignment.center,
         children: [
           _imageBackGround(context),
+          
           SingleChildScrollView(
             child: Container(
               height: MediaQuery.of(context).size.height,
@@ -35,6 +37,9 @@ class ProfileUpdateContent extends StatelessWidget {
                 ],
               ),
             ),
+          ),
+          DefaultIconBack(
+            left: 15, top: 50
           )
         ],
       ),
@@ -91,10 +96,11 @@ class ProfileUpdateContent extends StatelessWidget {
         onPressed: (){
           bloc?.add(ProfileUpdateFormSubmit());
         },
-        child: Icon(Icons.check,
-        color: Colors.white,
+        child: Icon(
+          Icons.check,
+          color: Colors.white,
         ),
-        ),
+      ),
     );
   }
 
@@ -175,7 +181,8 @@ class ProfileUpdateContent extends StatelessWidget {
         color: Color.fromRGBO(255, 255, 255, 0.7),
         borderRadius: BorderRadius.only(
           topLeft:Radius.circular(35),
-          topRight: Radius.circular(35) )
+          topRight: Radius.circular(35)
+        )
       ),
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 15),

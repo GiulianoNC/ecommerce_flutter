@@ -1,5 +1,7 @@
 import 'package:ecommerce_flutter/src/domain/models/User.dart';
 import 'package:ecommerce_flutter/src/domain/utils/Resource.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/profile/info/bloc/ProfileInfoBloc.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/profile/info/bloc/ProfileInfoEvent.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/profile/update/ProfileUpdateContent.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/profile/update/bloc/ProfileUpdateBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/profile/update/bloc/ProfileUpdateEvent.dart';
@@ -42,21 +44,30 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
           final responseState= state.response;
           if(responseState is Error){
             print('Actualizacion erronea: ${responseState.message}');
+            
             Fluttertoast.showToast(
               msg: 'Actualizacion erronea: $responseState.message',
               toastLength: Toast.LENGTH_LONG
             );
           }else if (responseState is Success){
             User user = responseState.data as User;
-            _bloc?.add(ProfileUpdateUserSession(user: user));   
+            print('Usuario actualizado ${user.toJson()}');
+            _bloc?.add(ProfileUpdateUserSession(user: user));
+            setState(() {
+             this.user = user;
+            });
+            Future.delayed(Duration(seconds: 1),(){
+              context.read<ProfileInfoBloc>().add(ProfileInfoGetUser());//esto para actualizar la informacion del bloc 
+            });  
+             
             Fluttertoast.showToast(
               msg: 'Actualizacion exitosa',
               toastLength: Toast.LENGTH_LONG
             );
-          }else if (responseState is Loading) {
+          }/*else if (responseState is Loading) {
             // Puedes agregar un manejo de carga si lo deseas
               print('Cargando...');
-          }
+          }*/
         },
         child: BlocBuilder<ProfileUpdateBloc,ProfileUpdateState>(
           builder: (context,state) {

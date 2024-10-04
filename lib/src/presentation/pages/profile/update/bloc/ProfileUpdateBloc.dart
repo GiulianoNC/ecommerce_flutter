@@ -64,6 +64,7 @@ class ProfileUpdateBloc extends Bloc<ProfileUpdateEvent, ProfileUpdateState>{
     authResponse.user.lastname = event.user.lastname;
     authResponse.user.phone = event.user.phone;
     authResponse.user.image = event.user.image;
+    await authusecases.saveUserSession.run(authResponse);//para refrescar con la actualziacion insertada
   }  
 
   Future<void>?_onNameChanged(ProfileUpdateNameChanged event, Emitter<ProfileUpdateState>emit){
