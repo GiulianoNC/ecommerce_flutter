@@ -109,7 +109,8 @@ class ProfileUpdateBloc extends Bloc<ProfileUpdateEvent, ProfileUpdateState>{
     if(image != null){
       emit(
         state.copyWith(
-          image: File(image.path)
+          image: File(image.path),
+          formKey: formKey
         )
       );
     }
@@ -121,7 +122,8 @@ class ProfileUpdateBloc extends Bloc<ProfileUpdateEvent, ProfileUpdateState>{
     if(image != null){
       emit(
         state.copyWith(
-          image: File(image.path)
+          image: File(image.path),
+          formKey: formKey
         )
       );
     }

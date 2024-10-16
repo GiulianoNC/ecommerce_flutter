@@ -1,6 +1,11 @@
 import 'package:ecommerce_flutter/injection.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/auth/AuthUseCases.dart';
+import 'package:ecommerce_flutter/src/domain/userCases/categories/CategoriesUseCases.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/users/UsersUseCases.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/category/create/bloc/AdminCategoryCreateBloc.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/category/create/bloc/AdminCategoryCreateEvent.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/category/list/bloc/AdminCategoryListBloc.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/category/update/bloc/AdminCategoryUpdateBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/admin/home/bloc/AdminHomeBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/login/bloc/LoginBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/login/bloc/LoginEvent.dart';
@@ -20,6 +25,8 @@ List<BlocProvider> blocProviders =[
   BlocProvider<AdminHomeBloc>(create: (context) => AdminHomeBloc(locator<Authusecases>())),
   BlocProvider<ProfileInfoBloc>(create: (context) => ProfileInfoBloc(locator<Authusecases>())..add(ProfileInfoGetUser())), 
   BlocProvider<ProfileUpdateBloc>(create: (context) => ProfileUpdateBloc(locator<UsersUseCases>(),locator<Authusecases>())),
-  
-  
+  BlocProvider<AdminCategoryCreateBloc>(create: (context) => AdminCategoryCreateBloc(locator<CategoriesUseCases>())..add(AdminCategoryCreateInitEvent())),
+  BlocProvider<AdminCategoryListBloc>(create: (context) => AdminCategoryListBloc(locator<CategoriesUseCases>())),
+  BlocProvider<AdminCategoryUpdateBloc>(create: (context) => AdminCategoryUpdateBloc(locator<CategoriesUseCases>())),
+
 ];

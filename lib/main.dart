@@ -1,5 +1,7 @@
 import 'package:ecommerce_flutter/injection.dart';
 import 'package:ecommerce_flutter/src/BlocProviders.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/category/create/AdminCategoryCreatePage.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/category/update/AdminCategoryUpdatePage.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/admin/home/AdminHomePage.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/home/ClientHomePage.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/login/LoginPage.dart';
@@ -40,7 +42,9 @@ class MyApp extends StatelessWidget {
           'client/home':(BuildContext context) => ClientHomePage(),
           'admin/home':(BuildContext context) => AdminHomePage(),
           'profile/info':(BuildContext context) => ProfileInfoPage(),
-          'profile/update':(BuildContext context) => ProfileUpdatePage()
+          'profile/update':(BuildContext context) => ProfileUpdatePage(),
+          'admin/category/create':(BuildContext context) => AdminCategoryCreatePage(),
+          'admin/category/update':(BuildContext context) => AdminCategoryUpdatePage()
         },
       ),
     );
