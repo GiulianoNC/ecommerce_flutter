@@ -20,6 +20,18 @@ class CategoriesRepositoryImpl implements CategoriesRepository{
   Future<Resource<List<Category>>> getCategories() {
    return categoriesService.getCategories();
   }
-
-
+  
+  @override
+  Future<Resource<Category>> update(int id, Category category, File? file) {
+    if(file == null){
+      return categoriesService.update(id, category);
+    }else{
+      return categoriesService.updateImage(id, category, file);
+    }   
+  }
+  
+  @override
+  Future<Resource<bool>> delete(int id) {
+    return categoriesService.delete(id);
+  }
 }

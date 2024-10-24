@@ -27,6 +27,14 @@ class AdminCategoryCreateState extends Equatable{
     description: description.value
   );
 
+  AdminCategoryCreateState resetForm(){
+    return AdminCategoryCreateState(
+      name: const BlocFormItem(error :'Ingresa el nombre'),
+      description: const BlocFormItem(error: 'Ingresa la descripción')
+    );
+
+  }
+
   AdminCategoryCreateState copyWith({
    BlocFormItem? name,
    BlocFormItem? description,

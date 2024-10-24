@@ -1,20 +1,20 @@
-import 'package:ecommerce_flutter/src/domain/models/Category.dart';
-import 'package:ecommerce_flutter/src/presentation/pages/admin/category/update/bloc/AdminCategoryUpdateEvent.dart';
-import 'package:ecommerce_flutter/src/presentation/pages/admin/category/update/bloc/AdminCategoryUpdateState.dart';
-import 'package:ecommerce_flutter/src/presentation/pages/admin/category/update/bloc/AdminCategoryUpdateBloc.dart';
+import 'package:ecommerce_flutter/src/domain/models/Product.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/product/update/bloc/AdminProductUpdateBloc.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/product/update/bloc/AdminProductUpdateEvent.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/product/update/bloc/AdminProductUpdateState.dart';
 import 'package:ecommerce_flutter/src/presentation/utils/BlocForItem.dart';
 import 'package:ecommerce_flutter/src/presentation/utils/SelectOptionImageDialog.dart';
 import 'package:ecommerce_flutter/src/presentation/widgets/DefaultIconBack.dart';
 import 'package:ecommerce_flutter/src/presentation/widgets/Default_textfield.dart';
 import 'package:flutter/material.dart';
 
-class AdminCategoryUpdateContent extends StatelessWidget {
+class AdminProductUpdateContent extends StatelessWidget {
 
-  AdminCategoryUpdateBloc? bloc;
-  AdminCategoryUpdateState state;
-  Category category;
+  AdminProductUpdateBloc? bloc;
+  AdminProductUpdateState state;
+  Product? product;
 
-  AdminCategoryUpdateContent(this.bloc, this.state,this.category);
+  AdminProductUpdateContent(this.bloc, this.state, this.product);
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +30,15 @@ class AdminCategoryUpdateContent extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,//separa lso elementos al extremo inferior
                 children: [
-                   _imageCategory(context),
-                   _cardCategoryForm(context)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      _imageProductOne(context),
+                      SizedBox(width: 20),
+                      _imageProductTwoo(context),                      
+                    ],
+                  ),                   
+                   _cardProductForm(context)
                 ],
               ),
             ),
@@ -42,10 +49,12 @@ class AdminCategoryUpdateContent extends StatelessWidget {
     );
   }
 
-  Widget _cardCategoryForm(BuildContext context){
+
+
+  Widget _cardProductForm(BuildContext context){
     return Container(
       width: double.infinity,
-      height: MediaQuery.of(context).size.height *0.37,
+      height: MediaQuery.of(context).size.height *0.5,
       decoration: BoxDecoration(
         color: Color.fromRGBO(255, 255, 255, 0.7),
         borderRadius: BorderRadius.only(
@@ -57,9 +66,10 @@ class AdminCategoryUpdateContent extends StatelessWidget {
         margin:EdgeInsets.symmetric(horizontal: 35),
         child: Column(
           children: [
-            _textNewCategory(),
+            _textNewProduct(),
             _textFieldName(),
             _textFieldDescription(),
+            _textFieldPrice(),
             _fabSubmit()
           ],),
       ),
@@ -86,12 +96,12 @@ class AdminCategoryUpdateContent extends StatelessWidget {
     );
   }
 
-  Widget _textNewCategory(){
+  Widget _textNewProduct(){
     return Container(
       alignment: Alignment.centerLeft,
       margin: EdgeInsets.only(top: 35, left:10, bottom: 10),
       child: Text(
-        'NUEVA CATEGORIA',
+        'NUEVO PRODUCTO',
         style: TextStyle(
           fontSize: 17
         ),
@@ -101,12 +111,12 @@ class AdminCategoryUpdateContent extends StatelessWidget {
 
   Widget _textFieldName(){
     return DefaultTextfield(
-      label: 'Nombre de la categoria',
+      label: 'Nombre del producto',
       icon: Icons.category,
-      initialValue: category?.name ?? '',
       onChanged: (text){
         bloc?.add(NameChanged(name: BlocFormItem(value: text)));
       },
+      initialValue: product?.name ?? '',
       validator: (value){
         return state.name.error;
       },
@@ -118,10 +128,10 @@ class AdminCategoryUpdateContent extends StatelessWidget {
     return DefaultTextfield(
       label: 'Descripcion',
       icon: Icons.list,
-      initialValue: category?.description ?? '',
       onChanged: (text){
         bloc?.add(DescriptionChanged(description: BlocFormItem(value: text)));
       },
+      initialValue: product?.description ?? '',
       validator: (value){
         return state.description.error;
       },
@@ -129,13 +139,29 @@ class AdminCategoryUpdateContent extends StatelessWidget {
     );
   }
 
-  Widget _imageCategory(BuildContext context){
+  Widget _textFieldPrice(){
+    return DefaultTextfield(
+      label: 'precio del producto',
+      icon: Icons.money,
+      TextInputType: TextInputType.number,
+      onChanged: (text){
+        bloc?.add(PriceChanged(price: BlocFormItem(value: text)));
+      },
+      initialValue: product?.price.toString() ?? '',
+      validator: (value){
+        return state.price.error;
+      },
+      color: Colors.black,
+    );
+  }
+
+  Widget _imageProductOne(BuildContext context){
     return GestureDetector(
       onTap: (){
         SelectOptionImageDialog(
           context,
-          (){bloc?.add(PickImage());}, 
-          (){bloc?.add(TakePhoto());}, 
+          (){bloc?.add(PickImage(numberFile: 1));}, 
+          (){bloc?.add(TakePhoto(numberFile:1));}, 
         );
       },
       child: Container(
@@ -144,18 +170,53 @@ class AdminCategoryUpdateContent extends StatelessWidget {
         child: AspectRatio(
           aspectRatio: 1/1,
           child: ClipOval(
-            child:state.file != null 
+            child:state.file1 != null 
               ? Image.file(
-                state.file!,
+                state.file1!,
                 fit: BoxFit.cover,
-              )
-              :category != null 
+                )
+              :product != null 
               ?FadeInImage.assetNetwork(
                 placeholder: 'assets/img/user_image.png',
-                image: category!.image!,
+                image: product!.image1!,
                 fit:BoxFit.cover,
                 fadeInDuration: Duration(seconds: 1),
-              ) 
+              )
+              :Image.asset('assets/img/no-image.png',
+              fit: BoxFit.cover),
+              ),
+            ),
+        ),
+    );
+  }
+
+  Widget _imageProductTwoo(BuildContext context){
+    return GestureDetector(
+      onTap: (){
+        SelectOptionImageDialog(
+          context,
+          (){bloc?.add(PickImage(numberFile: 2));}, 
+          (){bloc?.add(TakePhoto(numberFile:2));}, 
+        );
+      },
+      child: Container(
+        width: 150,
+        margin: EdgeInsets.only(top:100),
+        child: AspectRatio(
+          aspectRatio: 1/1,
+          child: ClipOval(
+            child:state.file2 != null 
+              ? Image.file(
+                state.file2!,
+                fit: BoxFit.cover,
+                )
+              :product != null 
+              ?FadeInImage.assetNetwork(
+                placeholder: 'assets/img/user_image.png',
+                image: product!.image2!,
+                fit:BoxFit.cover,
+                fadeInDuration: Duration(seconds: 1),
+              )
               :Image.asset('assets/img/no-image.png',
               fit: BoxFit.cover),
               ),

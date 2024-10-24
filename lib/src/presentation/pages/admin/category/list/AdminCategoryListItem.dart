@@ -1,51 +1,61 @@
 import 'package:ecommerce_flutter/src/domain/models/Category.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/category/list/bloc/AdminCategoryListBloc.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/category/list/bloc/AdminCategoryListEvent.dart';
 import 'package:flutter/material.dart';
 
 class AdminCategoryListItem extends StatelessWidget {
  
+  AdminCategoryListBloc? bloc;
   Category? category;
 
-  AdminCategoryListItem(this.category);
+  AdminCategoryListItem(this.bloc, this.category);
 
   @override 
   Widget build(BuildContext context) {
-    return ListTile(
-    //imagenes
-    leading:category != null ?
-     Container(
-      width: 70,
-       child: FadeInImage.assetNetwork(
-        placeholder: 'assets/img/user_image.png',
-        image: category!.image!,
-        fit:BoxFit.cover,
-        fadeInDuration: Duration(seconds: 1),
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, 'admin/product/list', arguments: category);
+      },
+      child: ListTile(
+      //imagenes
+      leading:category != null ?
+       Container(
+        width: 70,
+         child: FadeInImage.assetNetwork(
+          placeholder: 'assets/img/user_image.png',
+          image: category!.image!,
+          fit:BoxFit.cover,
+          fadeInDuration: Duration(seconds: 1),
+          ),
+       )
+        : Container(),
+        title:Text(category?.name ?? ''),
+        subtitle:Text(category?.description ?? ''),
+        contentPadding: EdgeInsets.only(left: 10,right: 10, top:10 ),
+      //columna de botones
+      trailing: Wrap(
+        direction: Axis.horizontal,
+        children: [
+          IconButton(
+           onPressed: (){
+            Navigator.pushNamed(context, 'admin/category/update', arguments: category);
+           },
+           icon: Icon(
+            Icons.edit
+           )
+          ),
+          IconButton(
+           onPressed: (){
+            bloc?.add(DeleteCategory(id: category!.id!));
+           },
+           icon: Icon(
+            Icons.delete
+           )
+          )        
+        ],
+      ),
+      
         ),
-     )
-      : Container(),
-      title:Text(category?.name ?? ''),
-      subtitle:Text(category?.description ?? ''),
-      contentPadding: EdgeInsets.only(left: 10,right: 10, top:10 ),
-    //columna de botones
-    trailing: Wrap(
-      direction: Axis.horizontal,
-      children: [
-        IconButton(
-         onPressed: (){
-          Navigator.pushNamed(context, 'admin/category/update', arguments: category);
-         },
-         icon: Icon(
-          Icons.edit
-         )
-        ),
-        IconButton(
-         onPressed: (){},
-         icon: Icon(
-          Icons.delete
-         )
-        )        
-      ],
-    ),
-
-  );
+    );
   }
 }

@@ -14,33 +14,19 @@ import 'package:path/path.dart';
 class CategoriesService{
  
 
-  SharedPref sharedPref;
+  Future<String>token;
 
-  CategoriesService(this.sharedPref);
+  CategoriesService(this.token);
 
 
   Future<Resource<Category>>create(Category category,File file) async {
     try {
       //PETICION A LA RUTA http://192.168.0.21:3000/categories
       Uri url = Uri.http(Apiconfig.API_ECOMMERCE, '/categories');
-      String token ='';
-      // Recuperar el token del usuario almacenado
-      final userSession = await sharedPref.read('user');
-      print('User session: $userSession');
-
-      if(userSession != null){
-        AuthResponse authResponse = AuthResponse.fromJson(userSession);
-        token = authResponse.token;
-        await sharedPref.save('user', authResponse.toJson());
-        print('Token almacenado: ${authResponse.token}');
-
-        }else{
-        // Si no hay sesión, devuelve un error
-        return Error('No hay sesión activa. Por favor, inicia sesión nuevamente.');
-        }
-        // Configuración de la solicitud
+     
+      // Configuración de la solicitud
       final request = http.MultipartRequest('POST', url);
-      request.headers['Authorization'] =token;
+      request.headers['Authorization'] =await token;
       // Agregar el archivo
       request.files.add(http.MultipartFile(
         'file',
@@ -77,16 +63,9 @@ class CategoriesService{
       //PETICION A LA RUTA http://192.168.0.21:3000/categories
       Uri url = Uri.http(Apiconfig.API_ECOMMERCE, '/categories');
       //obteniendo el token
-      String token ='';
-      final userSession = await sharedPref.read('user');
-        if(userSession != null){
-        AuthResponse authResponse = AuthResponse.fromJson(userSession);
-        token = authResponse.token;
-        }
-      
       Map<String, String> headers ={
         "Content-Type": "application/json",
-        "Authorization": token
+        "Authorization":await token
         };
       
       final response = await  http.get(url, headers: headers);
@@ -102,6 +81,95 @@ class CategoriesService{
       print('Error $e' );
       return Error(e.toString());
     }
+  }
+
+    Future<Resource<Category>>updateImage(int id, Category category,File file) async {
+    try {
+      //PETICION A LA RUTA http://192.168.0.21:3000/categories/5
+      Uri url = Uri.http(Apiconfig.API_ECOMMERCE, '/categories/upload/$id');
+      
+      final request = http.MultipartRequest('PUT', url);
+      request.headers['Authorization'] =await token;
+      request.files.add(http.MultipartFile(
+        'file',
+        http.ByteStream(file.openRead().cast()),
+        await file.length(),
+        filename: basename(file.path),
+        contentType: MediaType('image', 'jpg')
+
+      ));
+      request.fields['name']= category.name;
+      request.fields['description']= category.description;
+      final response = await request.send();
+      print('RESPONSE: ${response.statusCode}');
+      final data = json.decode(await response.stream.transform(utf8.decoder).first);   
+      if(response.statusCode == 200 || response.statusCode == 201){//EXITOSA
+        Category categoryResponse = Category.fromJson(data);
+        return Success(categoryResponse);
+      }else{
+        return Error(listToString(data['message']));//ERROR
+      }
+    } catch (e) {
+      print('Error $e' );
+      return Error(e.toString());
     }
+  }
+
+    Future<Resource<Category>>update(int id, Category category) async {
+    try {
+      //PETICION A LA RUTA http://192.168.0.21:3000/users/5
+      Uri url = Uri.http(Apiconfig.API_ECOMMERCE, '/categories/$id');
+      
+      Map<String, String> headers ={
+        "Content-Type": "application/json",
+        "Authorization":await token
+        };
+      String body = json.encode({
+        'name':category.name,
+        'description':category.description
+      });
+      print('Request Body: $body');
+
+      final response = await  http.put(url, headers: headers, body: body);
+      final data = jsonDecode(response.body);
+      print('Response: ${response.body}');
+
+
+      if(response.statusCode == 200 || response.statusCode == 201){//EXITOSA
+        Category categoryResponse = Category.fromJson(data);
+        return Success(categoryResponse);
+      }else{
+        return Error(listToString(data['message']));//ERROR
+      }
+    } catch (e) {
+      print('Error $e' );
+      return Error(e.toString());
+    }
+  }
+ 
+  Future<Resource<bool>>delete(int id) async {
+    try {
+      //PETICION A LA RUTA http://192.168.0.21:3000/users/5
+      Uri url = Uri.http(Apiconfig.API_ECOMMERCE, '/categories/$id');
+      
+      Map<String, String> headers ={
+        "Content-Type": "application/json",
+        "Authorization":await token
+        };
+      final response = await  http.delete(url, headers: headers);
+      final data = jsonDecode(response.body);
+      print('Response: ${response.body}');
+
+      if(response.statusCode == 200 || response.statusCode == 201){//EXITOSA
+        return Success(true);
+      }else{
+        return Error(listToString(data['message']));//ERROR
+      }
+    } catch (e) {
+      print('Error $e' );
+      return Error(e.toString());
+    }
+  }
+
 
 }

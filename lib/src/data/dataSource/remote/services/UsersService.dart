@@ -13,24 +13,18 @@ import 'package:path/path.dart';
 
 class UsersService {
 
-  SharedPref sharedPref;
+  Future<String>token;
 
-  UsersService(this.sharedPref);
+
+  UsersService(this.token);
 
   Future<Resource<User>>update(int id, User user) async {
     try {
       //PETICION A LA RUTA http://192.168.0.21:3000/users/5
       Uri url = Uri.http(Apiconfig.API_ECOMMERCE, '/users/$id');
-      String token ='';
-      final userSession = await sharedPref.read('user');
-       if(userSession != null){
-        AuthResponse authResponse = AuthResponse.fromJson(userSession);
-        token = authResponse.token;
-       }
-      
       Map<String, String> headers ={
         "Content-Type": "application/json",
-        "Authorization": token
+        "Authorization":await token
         };
       String body = json.encode({
         'name':user.name,
@@ -56,14 +50,9 @@ class UsersService {
     try {
       //PETICION A LA RUTA http://192.168.0.21:3000/users/upload/5
       Uri url = Uri.http(Apiconfig.API_ECOMMERCE, '/users/upload/$id');
-      String token ='';
-      final userSession = await sharedPref.read('user');
-       if(userSession != null){
-        AuthResponse authResponse = AuthResponse.fromJson(userSession);
-        token = authResponse.token;
-       }
+      
       final request = http.MultipartRequest('PUT', url);
-      request.headers['Authorization'] =token;
+      request.headers['Authorization'] =await token;
       request.files.add(http.MultipartFile(
         'file',
         http.ByteStream(file.openRead().cast()),

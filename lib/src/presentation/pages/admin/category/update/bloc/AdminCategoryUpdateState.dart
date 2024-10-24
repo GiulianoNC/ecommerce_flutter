@@ -24,6 +24,13 @@ class AdminCategoryUpdateState extends Equatable{
     this.response
   });
 
+  AdminCategoryUpdateState resetForm(){
+    return AdminCategoryUpdateState(
+      file:null
+    );
+
+  }
+
   toCategory() => Category(
     id : id,
     name: name.value,

@@ -38,6 +38,11 @@ class FormSubmit extends AdminCategoryUpdateEvent{
   @override
   List<Object?> get props =>[] ;
 }
+class ResetForm extends AdminCategoryUpdateEvent{
+  const ResetForm();
+  @override
+  List<Object?> get props =>[] ;
+}
 
 
 class PickImage extends AdminCategoryUpdateEvent{

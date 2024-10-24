@@ -1,4 +1,5 @@
 import 'package:ecommerce_flutter/injection.dart';
+import 'package:ecommerce_flutter/src/domain/products/ProductstUseCases.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/auth/AuthUseCases.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/categories/CategoriesUseCases.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/users/UsersUseCases.dart';
@@ -7,6 +8,9 @@ import 'package:ecommerce_flutter/src/presentation/pages/admin/category/create/b
 import 'package:ecommerce_flutter/src/presentation/pages/admin/category/list/bloc/AdminCategoryListBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/admin/category/update/bloc/AdminCategoryUpdateBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/admin/home/bloc/AdminHomeBloc.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/product/list/bloc/AdminProductListBloc.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/product/list/create/bloc/AdminProductCreateBloc.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/product/update/bloc/AdminProductUpdateBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/login/bloc/LoginBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/login/bloc/LoginEvent.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/profile/info/bloc/ProfileInfoBloc.dart';
@@ -28,5 +32,8 @@ List<BlocProvider> blocProviders =[
   BlocProvider<AdminCategoryCreateBloc>(create: (context) => AdminCategoryCreateBloc(locator<CategoriesUseCases>())..add(AdminCategoryCreateInitEvent())),
   BlocProvider<AdminCategoryListBloc>(create: (context) => AdminCategoryListBloc(locator<CategoriesUseCases>())),
   BlocProvider<AdminCategoryUpdateBloc>(create: (context) => AdminCategoryUpdateBloc(locator<CategoriesUseCases>())),
+  BlocProvider<AdminProductCreateBloc>(create: (context) => AdminProductCreateBloc(locator<ProductsUsesCases>())),
+  BlocProvider<AdminProductListBloc>(create: (context) => AdminProductListBloc(locator<ProductsUsesCases>())),
+  BlocProvider<AdminProductUpdateBloc>(create: (context) => AdminProductUpdateBloc(locator<ProductsUsesCases>())),
 
 ];

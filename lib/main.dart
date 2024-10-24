@@ -3,6 +3,9 @@ import 'package:ecommerce_flutter/src/BlocProviders.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/admin/category/create/AdminCategoryCreatePage.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/admin/category/update/AdminCategoryUpdatePage.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/admin/home/AdminHomePage.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/product/list/AdminProductListPage.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/product/list/create/AdminProductCreatePage.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/product/update/AdminProductUpdatePage.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/home/ClientHomePage.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/login/LoginPage.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/profile/info/ProfileInfoPage.dart';
@@ -44,7 +47,10 @@ class MyApp extends StatelessWidget {
           'profile/info':(BuildContext context) => ProfileInfoPage(),
           'profile/update':(BuildContext context) => ProfileUpdatePage(),
           'admin/category/create':(BuildContext context) => AdminCategoryCreatePage(),
-          'admin/category/update':(BuildContext context) => AdminCategoryUpdatePage()
+          'admin/category/update':(BuildContext context) => AdminCategoryUpdatePage(),
+          'admin/product/list':(BuildContext context) => AdminProductListPage(),
+          'admin/product/create':(BuildContext context) => AdminProductCreatePage(),
+          'admin/product/update':(BuildContext context) => AdminProductUpdatePage()
         },
       ),
     );

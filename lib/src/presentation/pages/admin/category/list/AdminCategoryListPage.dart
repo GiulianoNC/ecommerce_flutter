@@ -47,6 +47,12 @@ class _AdminCategoryListPageState extends State<AdminCategoryListPage> {
       body: BlocListener<AdminCategoryListBloc,AdminCategoryListState>(
         listener: (context, state){
           final responseState = state.response;
+          if(responseState is Success){ 
+            if(responseState.data is bool){
+              _bloc?.add(GetCategories());
+            }
+            
+          }
           if(responseState is Error){
             Fluttertoast.showToast(msg: responseState.message, toastLength: Toast.LENGTH_LONG);
           }
@@ -59,7 +65,7 @@ class _AdminCategoryListPageState extends State<AdminCategoryListPage> {
             return ListView.builder(
               itemCount: categories.length,
               itemBuilder: (context, index){
-                return AdminCategoryListItem(categories[index]);
+                return AdminCategoryListItem(_bloc, categories[index]);
               });
             }
             return Container();
