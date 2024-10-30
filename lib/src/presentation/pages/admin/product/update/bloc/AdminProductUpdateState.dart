@@ -13,6 +13,7 @@ class AdminProductUpdateState extends Equatable{
   final BlocFormItem name;
   final BlocFormItem description;
   final BlocFormItem price;
+  final List<int>? imagesToUpdate;
   final GlobalKey<FormState>? formKey;
   final Resource? response;
   File? file1;
@@ -27,6 +28,7 @@ class AdminProductUpdateState extends Equatable{
     this.formKey,
     this.file1,
     this.file2,
+    this.imagesToUpdate,
     this.response
   });
 
@@ -57,6 +59,7 @@ class AdminProductUpdateState extends Equatable{
    Resource? response,
    File? file1,
    File? file2,
+   List<int>? imagesToUpdate
   }){
     return AdminProductUpdateState(
     id: id ?? this.id,
@@ -67,7 +70,8 @@ class AdminProductUpdateState extends Equatable{
     file1: file1 ?? this.file1,
     file2: file2 ?? this.file2,
     formKey: formKey,
-    response: response
+    response: response,
+    imagesToUpdate: imagesToUpdate ?? this.imagesToUpdate
     
     );
   }

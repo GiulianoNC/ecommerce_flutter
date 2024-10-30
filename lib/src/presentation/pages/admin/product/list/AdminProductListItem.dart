@@ -20,12 +20,12 @@ class AdminProductListItem extends StatelessWidget {
       leading:product != null ?
        Container(
         width: 70,
-         child: FadeInImage.assetNetwork(
+         child:product!.image1!.isNotEmpty ?FadeInImage.assetNetwork(
           placeholder: 'assets/img/user_image.png',
           image: product!.image1!,
           fit:BoxFit.cover,
           fadeInDuration: Duration(seconds: 1),
-          ),
+          ): Container(),
        )
         : Container(),
         title:Text(product?.name ?? ''),

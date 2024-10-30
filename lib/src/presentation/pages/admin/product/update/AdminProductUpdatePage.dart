@@ -42,8 +42,8 @@ class _AdminProductUpdatePageState extends State<AdminProductUpdatePage> {
           final responseState = state.response;
           if(responseState is Success){
             //context.read<AdminCategoryListBloc>().add(GetCategories());//unja vez que es exitoso, traiga los cambios haciendo un refresh
-            _bloc?.add(ResetForm());
-            Fluttertoast.showToast(msg: "La categoria se creó correctamente", toastLength: Toast.LENGTH_LONG);
+            //_bloc?.add(ResetForm());
+            Fluttertoast.showToast(msg: "El producto se actulizó correctamente", toastLength: Toast.LENGTH_LONG);
           }else if(responseState is Error){
             Fluttertoast.showToast(msg: responseState.message, toastLength: Toast.LENGTH_LONG);
 

@@ -2,20 +2,20 @@ import 'dart:io';
 
 import 'package:ecommerce_flutter/src/domain/products/ProductstUseCases.dart';
 import 'package:ecommerce_flutter/src/domain/utils/Resource.dart';
-import 'package:ecommerce_flutter/src/presentation/pages/admin/product/update/bloc/AdminProductUpdateEvent.dart';
-import 'package:ecommerce_flutter/src/presentation/pages/admin/product/update/bloc/AdminProductUpdateState.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/product/create/bloc/AdminProductCreateEvent.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/product/create/bloc/AdminProductCreateState.dart';
 import 'package:ecommerce_flutter/src/presentation/utils/BlocForItem.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
-class AdminProductUpdateBloc extends Bloc<AdminProductUpdateEvent, AdminProductUpdateState>{
+class AdminProductCreateBloc extends Bloc<AdminProductCreateEvent, AdminProductCreateState>{
   
   ProductsUsesCases productsUsesCases;
   
   
-  AdminProductUpdateBloc(this.productsUsesCases):super (AdminProductUpdateState()){
-    on<AdminProductUpdateInitEvent>(_onInitEvent);
+  AdminProductCreateBloc(this.productsUsesCases):super (AdminProductCreateState()){
+    on<AdminProductCreateInitEvent>(_onInitEvent);
     on<NameChanged>(_onNameChanged);
     on<PriceChanged>(_onPriceChanged);
     on<DescriptionChanged>(_onDescriptionChanged);
@@ -26,22 +26,17 @@ class AdminProductUpdateBloc extends Bloc<AdminProductUpdateEvent, AdminProductU
   }
 
   final formKey = GlobalKey<FormState>();
-  final List<int> imagesToUpdate = <int>[];
 
-  Future<void>? _onInitEvent(AdminProductUpdateInitEvent event, Emitter<AdminProductUpdateState> emit){
+  Future<void>? _onInitEvent(AdminProductCreateInitEvent event, Emitter<AdminProductCreateState> emit){
     emit(
       state.copyWith(
-        id:event.product?.id,
-        idCategory: event.product?.idCategory,
-        name: BlocFormItem(value: event.product?.name ?? ''),
-        description: BlocFormItem(value: event.product?.description ?? ''),
-        price: BlocFormItem(value: event.product?.price.toString() ?? ''),
+        idCategory: event.category?.id,
         formKey: formKey
       )
     );
   }
 
-  Future<void>? _onNameChanged(NameChanged event, Emitter<AdminProductUpdateState> emit){
+  Future<void>? _onNameChanged(NameChanged event, Emitter<AdminProductCreateState> emit){
     emit(
       state.copyWith(
         name:BlocFormItem(
@@ -53,7 +48,7 @@ class AdminProductUpdateBloc extends Bloc<AdminProductUpdateEvent, AdminProductU
     );
   }
 
-  Future<void>? _onDescriptionChanged(DescriptionChanged event, Emitter<AdminProductUpdateState> emit){
+  Future<void>? _onDescriptionChanged(DescriptionChanged event, Emitter<AdminProductCreateState> emit){
     emit(
       state.copyWith(
         description:BlocFormItem(
@@ -65,7 +60,7 @@ class AdminProductUpdateBloc extends Bloc<AdminProductUpdateEvent, AdminProductU
     );
   }
 
-  Future<void>? _onPriceChanged(PriceChanged event, Emitter<AdminProductUpdateState> emit){
+  Future<void>? _onPriceChanged(PriceChanged event, Emitter<AdminProductCreateState> emit){
   final isNumeric = double.tryParse(event.price.value) != null;
 
   emit(
@@ -79,12 +74,11 @@ class AdminProductUpdateBloc extends Bloc<AdminProductUpdateEvent, AdminProductU
   );
 }
 
-  Future<void>? _onPickImage(PickImage event, Emitter<AdminProductUpdateState> emit) async {
+  Future<void>? _onPickImage(PickImage event, Emitter<AdminProductCreateState> emit) async {
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
     if(image != null){
       if(event.numberFile == 1){
-        imagesToUpdate.add(0);
         emit(
           state.copyWith(
             file1: File(image.path),
@@ -92,7 +86,6 @@ class AdminProductUpdateBloc extends Bloc<AdminProductUpdateEvent, AdminProductU
           )
         );
       }else if(event.numberFile == 2){
-        imagesToUpdate.add(1);
         emit(
           state.copyWith(
             file2: File(image.path),
@@ -104,7 +97,7 @@ class AdminProductUpdateBloc extends Bloc<AdminProductUpdateEvent, AdminProductU
     }
   }
 
-  Future<void>? _onTakePhoto(TakePhoto event, Emitter<AdminProductUpdateState> emit) async {
+  Future<void>? _onTakePhoto(TakePhoto event, Emitter<AdminProductCreateState> emit) async {
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.camera);
     if(image != null){
@@ -126,8 +119,7 @@ class AdminProductUpdateBloc extends Bloc<AdminProductUpdateEvent, AdminProductU
     }
   }
 
-  Future<void>? _onFormSubmit(FormSubmit event, Emitter<AdminProductUpdateState> emit) async {
-  imagesToUpdate.clear();
+  Future<void>? _onFormSubmit(FormSubmit event, Emitter<AdminProductCreateState> emit) async {
    try{
     emit(
       state.copyWith(
@@ -136,27 +128,23 @@ class AdminProductUpdateBloc extends Bloc<AdminProductUpdateEvent, AdminProductU
       )
     );
     
-    List<File> files=[];
-    if(state.file1 != null){
-      imagesToUpdate.add(0);
-      files.add(state.file1!);
-    }
-    if(state.file2 != null){
-      imagesToUpdate.add(1);
-      files.add(state.file2!);
-    }
-
-    Resource response = await productsUsesCases.update.run(
-      state.id,
-      state.toProduct(),
-      files.isNotEmpty? files : null ,
-      imagesToUpdate.isNotEmpty ? imagesToUpdate :null);
+    if(state.file1 != null && state.file2 != null){
+      List<File> files=[state.file1!, state.file2!]; 
+      Resource response = await productsUsesCases.create.run(state.toProduct(), files);
       emit(
       state.copyWith(
         response: response,
         formKey: formKey
       )
     );
+    }else{
+      emit(
+      state.copyWith(
+        response: Error('Sekecciona las dos imagenes'),
+        formKey: formKey
+      )
+      );
+    }
     
    }catch(e){
     emit(
@@ -170,7 +158,7 @@ class AdminProductUpdateBloc extends Bloc<AdminProductUpdateEvent, AdminProductU
     
   }
 
-  Future<void>? _onResetForm(ResetForm event, Emitter<AdminProductUpdateState> emit){
+  Future<void>? _onResetForm(ResetForm event, Emitter<AdminProductCreateState> emit){
     state.formKey?.currentState?.reset();
   }
 
