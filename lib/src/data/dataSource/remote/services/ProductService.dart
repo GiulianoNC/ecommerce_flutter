@@ -119,10 +119,13 @@ class ProductService{
   Future<Resource<Product>>updateWithImage(int id, Product product,List<File> files, List<int>imagesToUpdate) async {
     try {
       //PETICION A LA RUTA http://192.168.0.21:3000/products
-      Uri url = Uri.http(Apiconfig.API_ECOMMERCE, '/products/upload/$id');      
+      Uri url = Uri.http(Apiconfig.API_ECOMMERCE, '/products/upload/$id');     
+      print('URL de la solicitud: $url'); 
       final request = http.MultipartRequest('PUT', url);
       request.headers['Authorization'] =await token;
+      print('Token de autorización: ${request.headers['Authorization']}');
       for (var file in files) {
+      print('Agregando archivo: ${file.path}');
       request.files.add(await http.MultipartFile.fromPath(
         'files[]',
         file.path,
@@ -130,12 +133,20 @@ class ProductService{
         ));
       }
 
-      print('Products ${product.toJson()}' );
+       print('Datos del producto: ${product.toJson()}');
       // Agregar campos adicionales
       request.fields['name']= product.name;
       request.fields['description']= product.description;
       request.fields['price']= product.price.toString();
       request.fields['images_to_update[]']= imagesToUpdate.join(',');//['0', '1']
+
+      // Imprimir campos adicionales
+      print('Campos adicionales enviados:');
+      print('Nombre: ${product.name}');
+      print('Descripción: ${product.description}');
+      print('Precio: ${product.price}');
+      print('Imágenes a actualizar: ${imagesToUpdate.join(',')}');
+
 
       // Enviar la solicitud
       final response = await request.send();
@@ -145,8 +156,37 @@ class ProductService{
       final data = json.decode(await response.stream.transform(utf8.decoder).first);   
       // Verificar el estado de la respuesta
       if(response.statusCode == 200 || response.statusCode == 201){//EXITOSA
+        print('Actualización exitosa.');
         Product productResponse = Product.fromJson(data);
         return Success(productResponse);
+      }else{
+         print('Error en la actualización: ${data['message']}');
+        return Error(listToString(data['message']));//ERROR
+      }
+    } catch (e) {
+      print('Error al realizar la actualización: $e');
+      return Error(e.toString());
+    }
+  }
+
+    Future<Resource<bool>>delete(int id) async {
+    try {
+      //PETICION A LA RUTA http://192.168.0.21:3000/users/5
+      Uri url = Uri.http(Apiconfig.API_ECOMMERCE, '/products/$id');
+      
+      Map<String, String> headers ={
+        "Content-Type": "application/json",
+        "Authorization":await token
+        };
+      
+
+      final response = await  http.delete(url, headers: headers);
+      final data = jsonDecode(response.body);
+      print('Response: ${response.body}');
+
+
+      if(response.statusCode == 200 || response.statusCode == 201){//EXITOSA
+        return Success(true);
       }else{
         return Error(listToString(data['message']));//ERROR
       }
@@ -155,5 +195,6 @@ class ProductService{
       return Error(e.toString());
     }
   }
+
 
 }

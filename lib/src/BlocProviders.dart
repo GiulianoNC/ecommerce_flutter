@@ -1,5 +1,5 @@
 import 'package:ecommerce_flutter/injection.dart';
-import 'package:ecommerce_flutter/src/domain/products/ProductstUseCases.dart';
+import 'package:ecommerce_flutter/src/domain/userCases/products/ProductstUseCases.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/auth/AuthUseCases.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/categories/CategoriesUseCases.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/users/UsersUseCases.dart';

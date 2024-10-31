@@ -7,10 +7,11 @@ import 'package:ecommerce_flutter/src/data/dataSource/remote/services/UsersServi
 import 'package:ecommerce_flutter/src/data/repository/CategoriesRepositoryImpl.dart';
 import 'package:ecommerce_flutter/src/data/repository/UsersRepositoryImpl.dart';
 import 'package:ecommerce_flutter/src/domain/models/AuthResponse.dart';
-import 'package:ecommerce_flutter/src/domain/products/CreateProductUseCase.dart';
-import 'package:ecommerce_flutter/src/domain/products/GetProductsByCategoryUseCase.dart';
-import 'package:ecommerce_flutter/src/domain/products/ProductstUseCases.dart';
-import 'package:ecommerce_flutter/src/domain/products/UpdateProductUseCase.dart';
+import 'package:ecommerce_flutter/src/domain/userCases/products/CreateProductUseCase.dart';
+import 'package:ecommerce_flutter/src/domain/userCases/products/DeleteProductUseCase.dart';
+import 'package:ecommerce_flutter/src/domain/userCases/products/GetProductsByCategoryUseCase.dart';
+import 'package:ecommerce_flutter/src/domain/userCases/products/ProductstUseCases.dart';
+import 'package:ecommerce_flutter/src/domain/userCases/products/UpdateProductUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/repository/AuthRepository.dart';
 import 'package:ecommerce_flutter/src/domain/repository/CategorieRepository.dart';
 import 'package:ecommerce_flutter/src/domain/repository/ProductsRepository.dart';
@@ -99,6 +100,7 @@ abstract class Appmodule {
   ProductsUsesCases get productsUsesCases => ProductsUsesCases(
     create: CreateProductUseCase(productsRepository),
     getProductsByCategory: GetProductsByCategoryUseCase(productsRepository),
-    update: UpdateProductUseCase(productsRepository)
+    update: UpdateProductUseCase(productsRepository),
+    delete: DeleteProductUseCase(productsRepository)
   );
 }

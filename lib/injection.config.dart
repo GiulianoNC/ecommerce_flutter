@@ -17,7 +17,7 @@ import 'src/data/dataSource/remote/services/CategoriesService.dart' as _i895;
 import 'src/data/dataSource/remote/services/ProductService.dart' as _i725;
 import 'src/data/dataSource/remote/services/UsersService.dart' as _i430;
 import 'src/di/AppModule.dart' as _i199;
-import 'src/domain/products/ProductstUseCases.dart' as _i312;
+import 'src/domain/userCases/products/ProductstUseCases.dart' as _i312;
 import 'src/domain/repository/AuthRepository.dart' as _i1048;
 import 'src/domain/repository/CategorieRepository.dart' as _i174;
 import 'src/domain/repository/ProductsRepository.dart' as _i418;

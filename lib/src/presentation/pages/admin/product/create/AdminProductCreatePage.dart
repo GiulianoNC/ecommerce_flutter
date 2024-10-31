@@ -4,6 +4,8 @@ import 'package:ecommerce_flutter/src/presentation/pages/admin/product/create/Ad
 import 'package:ecommerce_flutter/src/presentation/pages/admin/product/create/bloc/AdminProductCreateBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/admin/product/create/bloc/AdminProductCreateState.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/admin/product/create/bloc/AdminProductCreateEvent.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/product/list/bloc/AdminProductListBloc.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/product/list/bloc/AdminProductListEvent.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,7 +41,7 @@ class _AdminProductCreatePageState extends State<AdminProductCreatePage> {
         listener: (context, state){
           final responseState = state.response;
           if(responseState is Success){
-            //context.read<AdminCategoryListBloc>().add(GetCategories());//unja vez que es exitoso, traiga los cambios haciendo un refresh
+            context.read<AdminProductListBloc>().add(GetProductsByCategory(idCategory: category!.id!));//unja vez que es exitoso, traiga los cambios haciendo un refresh
             _bloc?.add(ResetForm());
             Fluttertoast.showToast(msg: "La categoria se creó correctamente", toastLength: Toast.LENGTH_LONG);
           }else if(responseState is Error){

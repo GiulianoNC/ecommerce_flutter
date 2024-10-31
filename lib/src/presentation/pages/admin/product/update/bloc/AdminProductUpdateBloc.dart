@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:ecommerce_flutter/src/domain/products/ProductstUseCases.dart';
+import 'package:ecommerce_flutter/src/domain/userCases/products/ProductstUseCases.dart';
 import 'package:ecommerce_flutter/src/domain/utils/Resource.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/admin/product/update/bloc/AdminProductUpdateEvent.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/admin/product/update/bloc/AdminProductUpdateState.dart';
