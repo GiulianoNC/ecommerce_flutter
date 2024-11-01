@@ -14,12 +14,10 @@ class ProfileInfoPage extends StatefulWidget {
 class _ProfileInfoPageState extends State<ProfileInfoPage> {
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-      body: BlocBuilder<ProfileInfoBloc, ProfileInfoState>(
-        builder: (context, state){
-          return ProfileInfoContent(state.user);
-        }        
-      )      
-    );
+    return Scaffold(body: BlocBuilder<ProfileInfoBloc, ProfileInfoState>(
+      builder: (context, state) {
+        return ProfileInfoContent(state.user);
+      },
+    ));
   }
 }

@@ -1,23 +1,23 @@
 import 'package:ecommerce_flutter/src/domain/models/Category.dart';
 import 'package:ecommerce_flutter/src/domain/utils/Resource.dart';
-import 'package:ecommerce_flutter/src/presentation/pages/admin/category/list/AdminCategoryListItem.dart';
-import 'package:ecommerce_flutter/src/presentation/pages/admin/category/list/bloc/AdminCategoryListBloc.dart';
-import 'package:ecommerce_flutter/src/presentation/pages/admin/category/list/bloc/AdminCategoryListEvent.dart';
-import 'package:ecommerce_flutter/src/presentation/pages/admin/category/list/bloc/AdminCategoryListState.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/client/category/list/ClientCategoryListItem.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/client/category/list/bloc/ClientCategoryListBloc.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/client/category/list/bloc/ClientCategoryListEvent.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/client/category/list/bloc/ClientCategoryListState.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class AdminCategoryListPage extends StatefulWidget {
-  const AdminCategoryListPage({super.key});
+class ClientCategoryListPage extends StatefulWidget {
+  const ClientCategoryListPage({super.key});
 
   @override
-  State<AdminCategoryListPage> createState() => _AdminCategoryListPageState();
+  State<ClientCategoryListPage> createState() => _ClientCategoryListPageState();
 }
 
-class _AdminCategoryListPageState extends State<AdminCategoryListPage> {
+class _ClientCategoryListPageState extends State<ClientCategoryListPage> {
 
-  AdminCategoryListBloc? _bloc;
+  ClientCategoryListBloc? _bloc;
 
   @override
   void initState() {
@@ -30,7 +30,7 @@ class _AdminCategoryListPageState extends State<AdminCategoryListPage> {
 
   @override
   Widget build(BuildContext context) {
-    _bloc = BlocProvider.of<AdminCategoryListBloc>(context);
+    _bloc = BlocProvider.of<ClientCategoryListBloc>(context);
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: (){
@@ -42,7 +42,7 @@ class _AdminCategoryListPageState extends State<AdminCategoryListPage> {
           color: Colors.white,
         ),
       ),
-      body: BlocListener<AdminCategoryListBloc,AdminCategoryListState>(
+      body: BlocListener<ClientCategoryListBloc,ClientCategoryListState>(
         listener: (context, state){
           final responseState = state.response;
           if(responseState is Success){ 
@@ -55,7 +55,7 @@ class _AdminCategoryListPageState extends State<AdminCategoryListPage> {
             Fluttertoast.showToast(msg: responseState.message, toastLength: Toast.LENGTH_LONG);
           }
         },
-        child:BlocBuilder<AdminCategoryListBloc,AdminCategoryListState>(
+        child:BlocBuilder<ClientCategoryListBloc,ClientCategoryListState>(
           builder: (context,state){
             final responseState = state.response;
            if(responseState is Success){ 
@@ -63,7 +63,7 @@ class _AdminCategoryListPageState extends State<AdminCategoryListPage> {
             return ListView.builder(
               itemCount: categories.length,
               itemBuilder: (context, index){
-                return AdminCategoryListItem(_bloc, categories[index]);
+                return ClientCategoryListItem(_bloc, categories[index]);
               });
             }
             return Container();
