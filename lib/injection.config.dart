@@ -17,13 +17,15 @@ import 'src/data/dataSource/remote/services/CategoriesService.dart' as _i895;
 import 'src/data/dataSource/remote/services/ProductService.dart' as _i725;
 import 'src/data/dataSource/remote/services/UsersService.dart' as _i430;
 import 'src/di/AppModule.dart' as _i199;
-import 'src/domain/userCases/products/ProductstUseCases.dart' as _i312;
 import 'src/domain/repository/AuthRepository.dart' as _i1048;
 import 'src/domain/repository/CategorieRepository.dart' as _i174;
 import 'src/domain/repository/ProductsRepository.dart' as _i418;
+import 'src/domain/repository/ShoppingBagRepository.dart' as _i303;
 import 'src/domain/repository/UsersRepository.dart' as _i562;
 import 'src/domain/userCases/auth/AuthUseCases.dart' as _i715;
 import 'src/domain/userCases/categories/CategoriesUseCases.dart' as _i842;
+import 'src/domain/userCases/products/ProductstUseCases.dart' as _i815;
+import 'src/domain/userCases/shoppingBag/ShoppingBagUseCases.dart' as _i817;
 import 'src/domain/userCases/users/UsersUseCases.dart' as _i364;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -49,10 +51,13 @@ extension GetItInjectableX on _i174.GetIt {
         () => appmodule.categoriesRepository);
     gh.factory<_i725.ProductService>(() => appmodule.productService);
     gh.factory<_i418.ProductsRepository>(() => appmodule.productsRepository);
+    gh.factory<_i303.ShoppingBagRepository>(
+        () => appmodule.shoppingBagRepository);
     gh.factory<_i715.Authusecases>(() => appmodule.authusecases);
     gh.factory<_i364.UsersUseCases>(() => appmodule.usersCases);
     gh.factory<_i842.CategoriesUseCases>(() => appmodule.categoriesUseCases);
-    gh.factory<_i312.ProductsUsesCases>(() => appmodule.productsUsesCases);
+    gh.factory<_i815.ProductsUsesCases>(() => appmodule.productsUsesCases);
+    gh.factory<_i817.ShoppingBagUseCases>(() => appmodule.shoppingBagUseCases);
     return this;
   }
 }

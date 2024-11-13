@@ -2,6 +2,7 @@ import 'package:ecommerce_flutter/injection.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/products/ProductstUseCases.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/auth/AuthUseCases.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/categories/CategoriesUseCases.dart';
+import 'package:ecommerce_flutter/src/domain/userCases/shoppingBag/ShoppingBagUseCases.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/users/UsersUseCases.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/admin/category/create/bloc/AdminCategoryCreateBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/admin/category/create/bloc/AdminCategoryCreateEvent.dart';
@@ -13,6 +14,8 @@ import 'package:ecommerce_flutter/src/presentation/pages/admin/product/create/bl
 import 'package:ecommerce_flutter/src/presentation/pages/admin/product/update/bloc/AdminProductUpdateBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/category/list/bloc/ClientCategoryListBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/home/bloc/ClientHomeBloc.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/client/product/detail/bloc/ClientProductDetailBloc.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/client/product/list/bloc/ClientProductListBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/login/bloc/LoginBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/login/bloc/LoginEvent.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/profile/info/bloc/ProfileInfoBloc.dart';
@@ -39,5 +42,7 @@ List<BlocProvider> blocProviders =[
   BlocProvider<AdminProductUpdateBloc>(create: (context) => AdminProductUpdateBloc(locator<ProductsUsesCases>())),
   BlocProvider<ClientHomeBloc>(create: (context) => ClientHomeBloc(locator<Authusecases>())),
   BlocProvider<ClientCategoryListBloc>(create: (context) => ClientCategoryListBloc(locator<CategoriesUseCases>())),
+  BlocProvider<ClientProductListBloc>(create: (context) => ClientProductListBloc(locator<ProductsUsesCases>())),
+  BlocProvider<ClientProductDetailBloc>(create: (context) => ClientProductDetailBloc(locator<ShoppingBagUseCases>())),
 
 ];

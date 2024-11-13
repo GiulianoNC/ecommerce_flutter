@@ -5,8 +5,10 @@ import 'package:ecommerce_flutter/src/data/dataSource/remote/services/Categories
 import 'package:ecommerce_flutter/src/data/dataSource/remote/services/ProductService.dart';
 import 'package:ecommerce_flutter/src/data/dataSource/remote/services/UsersService.dart';
 import 'package:ecommerce_flutter/src/data/repository/CategoriesRepositoryImpl.dart';
+import 'package:ecommerce_flutter/src/data/repository/ShoppingBagREpositoryImpl.dart';
 import 'package:ecommerce_flutter/src/data/repository/UsersRepositoryImpl.dart';
 import 'package:ecommerce_flutter/src/domain/models/AuthResponse.dart';
+import 'package:ecommerce_flutter/src/domain/repository/ShoppingBagRepository.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/products/CreateProductUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/products/DeleteProductUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/products/GetProductsByCategoryUseCase.dart';
@@ -28,6 +30,11 @@ import 'package:ecommerce_flutter/src/domain/userCases/categories/CreateCategory
 import 'package:ecommerce_flutter/src/domain/userCases/categories/DeleteCategoryUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/categories/GetCategoriesUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/categories/UpdateCategoryUseCase.dart';
+import 'package:ecommerce_flutter/src/domain/userCases/shoppingBag/AddShoppingBagUseCase.dart';
+import 'package:ecommerce_flutter/src/domain/userCases/shoppingBag/DeleteItemShoppingBagUseCase.dart';
+import 'package:ecommerce_flutter/src/domain/userCases/shoppingBag/DeleteShoppingBagUseCase.dart';
+import 'package:ecommerce_flutter/src/domain/userCases/shoppingBag/GetProductsShoppingBagUseCase.dart';
+import 'package:ecommerce_flutter/src/domain/userCases/shoppingBag/ShoppingBagUseCases.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/users/UpdateUsersUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/users/UsersUseCases.dart';
 import 'package:injectable/injectable.dart';
@@ -75,6 +82,10 @@ abstract class Appmodule {
   ProductsRepository get productsRepository => ProductsRepositoryImpl(productService);
  
   @injectable
+  ShoppingBagRepository get shoppingBagRepository => ShoppingBagRepositoryImpl(sharedPred);
+
+
+  @injectable
   Authusecases get authusecases => Authusecases(
     login: LoginUsecase(authRepository),
     resgister: Registerusecase(authRepository),
@@ -103,4 +114,14 @@ abstract class Appmodule {
     update: UpdateProductUseCase(productsRepository),
     delete: DeleteProductUseCase(productsRepository)
   );
+
+  @injectable
+  ShoppingBagUseCases get shoppingBagUseCases => ShoppingBagUseCases(
+    add: AddShoppingBagUseCase(shoppingBagRepository),
+    getProducts: GetProductsShoppingBagUseCase(shoppingBagRepository),
+    deleteItem: DeleteItemShoppingbagUseCase(shoppingBagRepository),
+    deleteShoppingBag: DeleteShoppingBagUseCase(shoppingBagRepository),
+  );
+
+
 }

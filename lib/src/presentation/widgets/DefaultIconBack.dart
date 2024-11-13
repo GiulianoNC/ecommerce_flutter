@@ -4,10 +4,12 @@ class DefaultIconBack extends StatelessWidget {
 
   double left;
   double top;
+  Color color;
 
   DefaultIconBack({
     required this.left,
-    required this.top
+    required this.top,
+    this.color= Colors.black
   });
 
   @override
@@ -20,7 +22,6 @@ class DefaultIconBack extends StatelessWidget {
         icon: Icon(
           Icons.arrow_back_ios,
           size: 40,
-          color: Colors.white,
         )),
     );
   }

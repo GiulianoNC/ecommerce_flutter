@@ -123,7 +123,7 @@ class CategoriesService{
       Map<String, String> headers ={
         "Content-Type": "application/json",
         "Authorization":await token
-        };
+      };
       String body = json.encode({
         'name':category.name,
         'description':category.description

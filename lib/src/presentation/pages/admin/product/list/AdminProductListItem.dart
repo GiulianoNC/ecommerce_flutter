@@ -40,28 +40,28 @@ class AdminProductListItem extends StatelessWidget {
           ],
         ),
         contentPadding: EdgeInsets.only(left: 10,right: 10, top:10 ),
-      //columna de botones
-      trailing: Wrap(
-        direction: Axis.horizontal,
-        children: [
-          IconButton(
-           onPressed: (){
-            Navigator.pushNamed(context, 'admin/product/update', arguments: product);
-           },
-           icon: Icon(
-            Icons.edit
-           )
-          ),
-          IconButton(
-           onPressed: (){
-            bloc?.add(DeleteProduct(id: product!.id!));
-           },
-           icon: Icon(
-            Icons.delete
-           )
-          )        
-        ],
-      ),
+        //columna de botones
+        trailing: Wrap(
+          direction: Axis.horizontal,
+          children: [
+            IconButton(
+            onPressed: (){
+              Navigator.pushNamed(context, 'admin/product/update', arguments: product);
+            },
+            icon: Icon(
+              Icons.edit
+            )
+            ),
+            IconButton(
+            onPressed: (){
+              bloc?.add(DeleteProduct(id: product!.id!));
+            },
+            icon: Icon(
+              Icons.delete
+            )
+            )        
+          ],
+        ),
       
         ),
     );
