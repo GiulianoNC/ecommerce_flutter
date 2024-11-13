@@ -6,4 +6,5 @@ Future<void> add(Product product);
 Future<List<Product>>getProducts ();
 Future<void> deleteItem(Product product);
 Future<void> deleteShoppingBag();
+Future<double>getTotal();
 }

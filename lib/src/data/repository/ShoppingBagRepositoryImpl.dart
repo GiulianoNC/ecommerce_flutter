@@ -53,5 +53,21 @@ class ShoppingBagRepositoryImpl implements ShoppingBagRepository{
     return selectedProducts;
   }
   
+  @override
+  Future<double> getTotal() async{
+    final data = await sharedPref.read('shopping_bag');
+    print('Data read from SharedPref: $data');
+    if(data == null){
+      return 0;
+    }
+    double total =0;
+    List<Product> selectedProducts= Product.fromJsonList(data).toList();
+     selectedProducts.forEach((product){
+      total = total +(product.quantity! * product.price);
+    });
+    return total;
+    
+  }
+  
 
 }

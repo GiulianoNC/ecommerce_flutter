@@ -1,11 +1,12 @@
+import 'package:ecommerce_flutter/src/domain/models/Product.dart';
 import 'package:ecommerce_flutter/src/domain/repository/ShoppingBagRepository.dart';
 
-class DeleteItemShoppingbagUseCase {
+class DeleteItemShoppinBagUseCase {
 
   ShoppingBagRepository shoppingBagRepository;
 
-  DeleteItemShoppingbagUseCase(this.shoppingBagRepository);
+  DeleteItemShoppinBagUseCase(this.shoppingBagRepository);
 
-  run()=> shoppingBagRepository.deleteShoppingBag();
+  run(Product product) => shoppingBagRepository.deleteItem(product);
 
 }

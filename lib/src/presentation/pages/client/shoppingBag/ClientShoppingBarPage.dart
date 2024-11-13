@@ -1,8 +1,8 @@
 import 'package:ecommerce_flutter/src/presentation/pages/client/shoppingBag/ClienShoppingBagItem.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/client/shoppingBag/ClientShoppingBagBottomBar.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/shoppingBag/bloc/ClientShoppingBagBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/shoppingBag/bloc/ClientShoppingBagEvent.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/shoppingBag/bloc/ClientShoppingBagState.dart';
-import 'package:ecommerce_flutter/src/presentation/widgets/DefaultButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,6 +22,7 @@ class _ClientShoppingBagPageState extends State<ClientShoppingBagPage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timestamp){
       _bloc?.add(GetShoppingBag());
+      _bloc?.add(GetTotal());
     }
     );    
   }
@@ -43,37 +44,10 @@ class _ClientShoppingBagPageState extends State<ClientShoppingBagPage> {
           );
         }
       ),
-      bottomNavigationBar: Container(
-        height: 100,
-        color: Colors.grey[300],
-        child: Column(
-          children: [
-            Divider(color: Colors.grey[400],height: 0),
-            SizedBox(height: 20),
-            Container(
-              color: Colors.grey[300],
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  const Text(
-                    'TOTAL: \$0',
-                    style: TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.bold
-                    ),
-                  ),
-                  Container(
-                    width: 180,
-                    child: Defaultbutton(
-                      text:'CONFIRMAR ORDEN' , 
-                      onPressed: (){}
-                    ),
-                  )
-                ],
-              ),
-            )
-          ],
-        ),
+      bottomNavigationBar: BlocBuilder<ClientShoppingBagBloc, ClientShoppingBagState>(
+        builder: (context, state) {
+          return ClientShoppingBagBottomBar(state);
+        }
       ),
     );
   }

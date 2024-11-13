@@ -1,5 +1,6 @@
 import 'package:ecommerce_flutter/src/domain/models/Product.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/shoppingBag/bloc/ClientShoppingBagBloc.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/client/shoppingBag/bloc/ClientShoppingBagEvent.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/shoppingBag/bloc/ClientShoppingBagState.dart';
 import 'package:flutter/material.dart';
 
@@ -46,7 +47,7 @@ class ClienShoppingBagItem extends StatelessWidget {
       children: [
         GestureDetector(
             onTap: () {
-             // bloc?.add(SubtractItem());
+              bloc?.add(SubtractItem(product: product!));
             },
             child: Container(
               width: 35,
@@ -83,7 +84,7 @@ class ClienShoppingBagItem extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              //bloc?.add(AddItem());
+              bloc?.add(AddItem(product: product!));
             },
             child: Container(
               width: 35,
@@ -135,7 +136,9 @@ class ClienShoppingBagItem extends StatelessWidget {
 
   Widget _iconRemove (){
     return IconButton(
-      onPressed: (){}, 
+      onPressed: (){
+        bloc?.add(RemoveItem(product: product!));
+      }, 
       icon: Icon(
         Icons.delete,
         color: Colors.red,
