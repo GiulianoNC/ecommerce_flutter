@@ -1,16 +1,21 @@
 import 'package:ecommerce_flutter/src/domain/models/Product.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/client/shoppingBag/bloc/ClientShoppingBagBloc.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/client/shoppingBag/bloc/ClientShoppingBagState.dart';
 import 'package:flutter/material.dart';
 
 class ClienShoppingBagItem extends StatelessWidget {
 
+  ClientShoppingBagBloc? bloc;
+  ClientShoppingBagState state;
   Product? product;
 
-  ClienShoppingBagItem(this.product);
+  ClienShoppingBagItem(this.bloc, this.state,this.product);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 80,
+      //height: 80,
+      margin: EdgeInsets.only(left: 25,right: 15,top: 15),
       child: Row(
         children: [
          _imageProduct(),
@@ -44,8 +49,8 @@ class ClienShoppingBagItem extends StatelessWidget {
              // bloc?.add(SubtractItem());
             },
             child: Container(
-              width: 40,
-              height: 40,
+              width: 35,
+              height: 35,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: Colors.grey[300],
@@ -57,23 +62,22 @@ class ClienShoppingBagItem extends StatelessWidget {
               child: Text(
                 '-',
                 style: TextStyle(
-                  fontSize: 23
+                  fontSize: 20
                 ),
               ),
             ),
           ),
           Container(
-            width: 40,
-            height: 40,
+            width: 35,
+            height: 35,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: Colors.grey[300],
             ),
             child: Text(
-              '0',
-              //state.quantity.toString(),
+              product?.quantity.toString() ?? '',
               style: TextStyle(
-                fontSize: 23
+                fontSize: 20
               ),
             ),
           ),
@@ -82,8 +86,8 @@ class ClienShoppingBagItem extends StatelessWidget {
               //bloc?.add(AddItem());
             },
             child: Container(
-              width: 40,
-              height: 40,
+              width: 35,
+              height: 35,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: Colors.grey[300],
@@ -95,7 +99,7 @@ class ClienShoppingBagItem extends StatelessWidget {
               child: Text(
                 '+',
                 style: TextStyle(
-                  fontSize: 23
+                  fontSize: 20
                 ),
               ),
             ),
@@ -105,24 +109,28 @@ class ClienShoppingBagItem extends StatelessWidget {
   }
 
   Widget _textProduct(){
-    return Text(
-      product?.name ?? 'Titulo del producto',
-      style: TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.bold
+    return Container(
+      width: 190,
+      child: Text(
+        product?.name ?? 'Titulo del producto',
+        overflow: TextOverflow.ellipsis,//para los productos que no se llegan a ver
+        style: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold
+        ),
       ),
     );
   }
 
   Widget _textPrice(){
-    return Text(
-      product?.price.toString() ?? '\$0',
+    return product != null ? Text(
+      '\$${product!.price * product!.quantity!}',
       style: TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.bold,
         color: Colors.grey
       ),
-    );
+    ): Container();
   }
 
   Widget _iconRemove (){
