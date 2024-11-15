@@ -2,8 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:ecommerce_flutter/src/data/api/ApiConfig.dart';
-import 'package:ecommerce_flutter/src/data/dataSource/local/SharedPref.dart';
-import 'package:ecommerce_flutter/src/domain/models/AuthResponse.dart';
 import 'package:ecommerce_flutter/src/domain/models/Category.dart';
 import 'package:ecommerce_flutter/src/domain/utils/ListToString.dart';
 import 'package:ecommerce_flutter/src/domain/utils/Resource.dart';
@@ -115,7 +113,7 @@ class CategoriesService{
     }
   }
 
-    Future<Resource<Category>>update(int id, Category category) async {
+  Future<Resource<Category>>update(int id, Category category) async {
     try {
       //PETICION A LA RUTA http://192.168.0.21:3000/users/5
       Uri url = Uri.http(Apiconfig.API_ECOMMERCE, '/categories/$id');

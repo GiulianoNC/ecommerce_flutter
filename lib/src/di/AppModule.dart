@@ -1,14 +1,20 @@
 
 import 'package:ecommerce_flutter/src/data/dataSource/local/SharedPref.dart';
+import 'package:ecommerce_flutter/src/data/dataSource/remote/services/AddressService.dart';
 import 'package:ecommerce_flutter/src/data/dataSource/remote/services/AuthService.dart';
 import 'package:ecommerce_flutter/src/data/dataSource/remote/services/CategoriesService.dart';
 import 'package:ecommerce_flutter/src/data/dataSource/remote/services/ProductService.dart';
 import 'package:ecommerce_flutter/src/data/dataSource/remote/services/UsersService.dart';
+import 'package:ecommerce_flutter/src/data/repository/AddressRepositoryImpl.dart';
 import 'package:ecommerce_flutter/src/data/repository/CategoriesRepositoryImpl.dart';
 import 'package:ecommerce_flutter/src/data/repository/ShoppingBagREpositoryImpl.dart';
 import 'package:ecommerce_flutter/src/data/repository/UsersRepositoryImpl.dart';
 import 'package:ecommerce_flutter/src/domain/models/AuthResponse.dart';
+import 'package:ecommerce_flutter/src/domain/repository/AddressRepository.dart';
 import 'package:ecommerce_flutter/src/domain/repository/ShoppingBagRepository.dart';
+import 'package:ecommerce_flutter/src/domain/userCases/address/AddressUseCases.dart';
+import 'package:ecommerce_flutter/src/domain/userCases/address/CreateAddressUseCase.dart';
+import 'package:ecommerce_flutter/src/domain/userCases/address/GetUserAddressUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/products/CreateProductUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/products/DeleteProductUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/products/GetProductsByCategoryUseCase.dart';
@@ -80,6 +86,12 @@ abstract class Appmodule {
   ProductService get productService => ProductService(token);
 
   @injectable
+  AddressService get addressService => AddressService(token);
+
+  @injectable
+  AddressRepository get addressRepository => AddressRepositoryImpl(addressService);
+
+  @injectable
   ProductsRepository get productsRepository => ProductsRepositoryImpl(productService);
  
   @injectable
@@ -125,5 +137,9 @@ abstract class Appmodule {
     getTotal: GetTotalShoppingBagUseCase(shoppingBagRepository),
   );
 
-
+  @injectable
+  AddressUseCases get addressUseCases => AddressUseCases(
+    create:CreateAddressUseCase(addressRepository),
+    getUserAddress: GetUserAddressUseCase(addressRepository)
+  );
 }

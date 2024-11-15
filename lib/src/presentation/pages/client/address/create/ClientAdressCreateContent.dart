@@ -73,9 +73,11 @@ class ClientAdressCreateContent extends StatelessWidget {
       child: FloatingActionButton(
         onPressed: (){
           if(state.formKey!.currentState!.validate()){
+             // Imprimir los valores antes de enviar
+            print("Address: ${state.address.value}");
+            print("Neighborhood: ${state.neighborhood.value}");
             bloc?.add(FormSubmit());
-          }
-          
+          }          
         },
         backgroundColor: Colors.black,
         child: Icon(
