@@ -13,23 +13,34 @@ class ClientAddressListBloc extends Bloc<ClientAddressListEvent, ClientAddressLi
 
   ClientAddressListBloc(this.addressUseCases,this.authusecases) : super(ClientAddressListState()) {
     on<GetUserAddress>(_onGetUserAddress);
+    on<ChangedRadioValue>(_onChangedRadioValue);
   }
 
   Future<void> _onGetUserAddress(GetUserAddress event,Emitter<ClientAddressListState> emit,) async {
     AuthResponse? authResponse = await authusecases.getUserSession.run();
     if(authResponse != null){
       emit(
-      state.copyWith(
-        response: Loading()
-      )
-    );
-    Resource response = await addressUseCases.getUserAddress.run(authResponse.user.id!);
+        state.copyWith(
+          response: Loading()
+        )
+      );
+      Resource response = await addressUseCases.getUserAddress.run(authResponse.user.id!);
+      emit(
+        state.copyWith(
+          response: response
+        )
+      );
+    } 
+  }
+
+  Future<void> _onChangedRadioValue(ChangedRadioValue event,Emitter<ClientAddressListState> emit,) async {
+    await addressUseCases.saveAdressInSession.run(event.address);
     emit(
       state.copyWith(
-        response: response
+        radioValue: event.radioValue
       )
     );
-    }
     
   }
+
 }

@@ -15,6 +15,7 @@ import 'package:ecommerce_flutter/src/domain/repository/ShoppingBagRepository.da
 import 'package:ecommerce_flutter/src/domain/userCases/address/AddressUseCases.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/address/CreateAddressUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/address/GetUserAddressUseCase.dart';
+import 'package:ecommerce_flutter/src/domain/userCases/address/SaveAdressInSessionsUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/products/CreateProductUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/products/DeleteProductUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/products/GetProductsByCategoryUseCase.dart';
@@ -89,7 +90,7 @@ abstract class Appmodule {
   AddressService get addressService => AddressService(token);
 
   @injectable
-  AddressRepository get addressRepository => AddressRepositoryImpl(addressService);
+  AddressRepository get addressRepository => AddressRepositoryImpl(addressService,sharedPred);
 
   @injectable
   ProductsRepository get productsRepository => ProductsRepositoryImpl(productService);
@@ -140,6 +141,8 @@ abstract class Appmodule {
   @injectable
   AddressUseCases get addressUseCases => AddressUseCases(
     create:CreateAddressUseCase(addressRepository),
-    getUserAddress: GetUserAddressUseCase(addressRepository)
+    getUserAddress: GetUserAddressUseCase(addressRepository),
+    saveAdressInSession: SaveAdressInSessionsUseCase(addressRepository),
+    getAddressSession: GetUserAddressUseCase(addressRepository)
   );
 }

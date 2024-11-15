@@ -5,5 +5,6 @@ abstract class AddressRepository{
 
   Future<Resource<Address>>create(Address address);
   Future<Resource<List<Address>>>getUserAddress(int idUser);
-
+  Future<void>saveAddressSession(Address address);
+  Future<Address?>getAddressSession();
 }

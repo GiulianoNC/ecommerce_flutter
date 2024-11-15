@@ -3,19 +3,26 @@ import 'package:equatable/equatable.dart';
 
 class ClientAddressListState extends Equatable{
 
+  final int radioValue;
   final Resource? response;
 
+
   const ClientAddressListState({
-    this.response
+    this.response,
+    this.radioValue =0
   });
 
   ClientAddressListState copyWith({
-    Resource? response
+    Resource? response,
+    int? radioValue
   }){
-    return ClientAddressListState(response: response);
+    return ClientAddressListState(
+      response: response ?? this.response,
+      radioValue: radioValue ?? this.radioValue
+    );
   }
 
   @override
-  List<Object?> get props => [response];
+  List<Object?> get props => [response,radioValue];
 
 }

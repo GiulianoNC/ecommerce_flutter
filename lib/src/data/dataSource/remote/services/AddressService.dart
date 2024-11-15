@@ -45,7 +45,7 @@ class AddressService {
 
   Future<Resource<List<Address>>> getUserAddress(int iduser) async {
     try {
-      Uri url = Uri.http(Apiconfig.API_ECOMMERCE, '/address/user$iduser');
+      Uri url = Uri.http(Apiconfig.API_ECOMMERCE, '/address/user/$iduser');
 
       Map<String, String> headers = {
         "Content-Type": "application/json",

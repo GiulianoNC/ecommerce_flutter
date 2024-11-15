@@ -2,6 +2,8 @@ import 'package:ecommerce_flutter/src/domain/utils/Resource.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/address/create/ClientAdressCreateContent.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/address/create/bloc/ClientAddressCreateBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/address/create/bloc/ClientAddressCreateState.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/client/address/list/bloc/ClientAddressListBloc.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/client/address/list/bloc/ClientAddressListEvent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -25,6 +27,7 @@ class _ClientAddressCreatePageState extends State<ClientAddressCreatePage> {
           listener: (context, state) {
             final responseState = state.response;
             if (responseState is Success) {
+              context.read<ClientAddressListBloc>().add(GetUserAddress());
               Fluttertoast.showToast(msg: "La dirección se creó correctamente", toastLength: Toast.LENGTH_LONG);
             } else if (responseState is Error) {
               Fluttertoast.showToast(msg: responseState.message, toastLength: Toast.LENGTH_LONG);

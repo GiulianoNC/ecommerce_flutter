@@ -1,5 +1,6 @@
 import 'package:ecommerce_flutter/src/domain/models/Address.dart';
 import 'package:ecommerce_flutter/src/domain/utils/Resource.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/client/address/list/ClientAddressListItem.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/address/list/bloc/ClientAddressListBloc.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/address/list/bloc/ClientAddressListEvent.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/address/list/bloc/ClientAddressListState.dart';
@@ -30,6 +31,9 @@ class _ClientAddressListPageState extends State<ClientAddressListPage> {
   Widget build(BuildContext context) {
     _bloc = BlocProvider.of<ClientAddressListBloc>(context);
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Mis direcciones'),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){
           Navigator.pushNamed(context, 'client/address/create');
@@ -61,10 +65,10 @@ class _ClientAddressListPageState extends State<ClientAddressListPage> {
             return ListView.builder(
               itemCount: address.length,
               itemBuilder: (context, index){
-                return Center(child: Text('Direccion ${address[index].address}'));
+                return ClientAddressListItem(_bloc,state,address[index],index); 
               });
             }else{
-               return Center(child: Text('Direccionasdsadsadasdasdasdsadasdsadasdasdsadas'));
+               return Center(child: Text('No se encontraron direcciones'));
             }
             //return Text('Direccion');
           }
