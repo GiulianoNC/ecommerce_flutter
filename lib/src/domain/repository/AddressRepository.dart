@@ -7,4 +7,6 @@ abstract class AddressRepository{
   Future<Resource<List<Address>>> getUserAddress(int idUser);
   Future<void> saveAddressInSession(Address address);
   Future<Address?> getAddressSession();
+  Future<Resource<bool>?> delete(int id);
+  Future<bool?> deleteFromSession();
 }

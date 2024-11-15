@@ -68,4 +68,28 @@ class AddressService {
     }
   }
 
+  Future<Resource<bool>>delete(int id) async {
+    try {
+      //PETICION A LA RUTA http://192.168.0.21:3000/
+      Uri url = Uri.http(Apiconfig.API_ECOMMERCE, '/address/$id');
+      
+      Map<String, String> headers ={
+        "Content-Type": "application/json",
+        "Authorization":await token
+        };
+      final response = await  http.delete(url, headers: headers);
+      final data = jsonDecode(response.body);
+      print('Response: ${response.body}');
+
+      if(response.statusCode == 200 || response.statusCode == 201){//EXITOSA
+        return Success(true);
+      }else{
+        return Error(listToString(data['message']));//ERROR
+      }
+    } catch (e) {
+      print('Error $e' );
+      return Error(e.toString());
+    }
+  }
+
 }

@@ -48,8 +48,8 @@ class _ClientAddressListPageState extends State<ClientAddressListPage> {
         listener: (context, state){
           final responseState = state.response;
           if(responseState is Success){ 
-            if(responseState.data is bool){
-             // _bloc?.add(Get());
+            if(responseState.data is bool){//si la direccion se borró correctamente
+              _bloc?.add(GetUserAddress());
             }
             
           }

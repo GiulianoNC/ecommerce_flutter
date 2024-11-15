@@ -35,5 +35,16 @@ class AddressRepositoryImpl implements AddressRepository{
     }
     return null;
   }
+  
+  @override
+  Future<Resource<bool>?> delete(int id) async{
+    return addressService.delete(id);
+  }
+  
+  @override
+  Future<bool?> deleteFromSession() async{
+    await sharedPref.remove('address');
+
+  }
 
 }

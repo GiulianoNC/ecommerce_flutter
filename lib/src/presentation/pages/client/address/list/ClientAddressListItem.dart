@@ -24,6 +24,11 @@ class ClientAddressListItem extends StatelessWidget {
               bloc?.add(ChangedRadioValue(radioValue: value!, address:address ));
             }
           ),
+          trailing: IconButton(
+            onPressed: (){
+              bloc?.add(DeleteAddress(id: address.id!));
+            }, 
+            icon: Icon(Icons.delete, color: Colors.red)),
           title: Text(address.address,
           style: TextStyle(
             fontWeight: FontWeight.bold,

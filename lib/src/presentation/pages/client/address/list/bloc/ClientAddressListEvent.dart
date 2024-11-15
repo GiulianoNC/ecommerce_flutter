@@ -34,3 +34,12 @@ class SetAddressSessions extends ClientAddressListEvent{
   @override
   List<Object?> get props => [addressList];
 }
+
+class DeleteAddress extends ClientAddressListEvent{
+ final int id;
+  
+  const DeleteAddress({required this.id});
+
+  @override
+  List<Object?> get props => [id];
+}

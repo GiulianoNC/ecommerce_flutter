@@ -3,13 +3,13 @@ import 'package:equatable/equatable.dart';
 
 class ClientAddressListState extends Equatable{
 
-  final int radioValue;
+  final int? radioValue;
   final Resource? response;
 
 
   const ClientAddressListState({
     this.response,
-    this.radioValue =0
+    this.radioValue
   });
 
   ClientAddressListState copyWith({
