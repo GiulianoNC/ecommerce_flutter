@@ -14,6 +14,7 @@ import 'package:ecommerce_flutter/src/domain/repository/AddressRepository.dart';
 import 'package:ecommerce_flutter/src/domain/repository/ShoppingBagRepository.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/address/AddressUseCases.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/address/CreateAddressUseCase.dart';
+import 'package:ecommerce_flutter/src/domain/userCases/address/GetAddressSessionUseCase%20.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/address/GetUserAddressUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/address/SaveAdressInSessionsUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/products/CreateProductUseCase.dart';
@@ -143,6 +144,6 @@ abstract class Appmodule {
     create:CreateAddressUseCase(addressRepository),
     getUserAddress: GetUserAddressUseCase(addressRepository),
     saveAdressInSession: SaveAdressInSessionsUseCase(addressRepository),
-    getAddressSession: GetUserAddressUseCase(addressRepository)
+    getAddressSession: GetAddressSessionUseCase (addressRepository)
   );
 }

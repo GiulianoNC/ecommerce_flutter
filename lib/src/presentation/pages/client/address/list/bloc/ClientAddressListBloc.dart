@@ -1,3 +1,4 @@
+import 'package:ecommerce_flutter/src/domain/models/Address.dart';
 import 'package:ecommerce_flutter/src/domain/models/AuthResponse.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/address/AddressUseCases.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/auth/AuthUseCases.dart';
@@ -14,6 +15,7 @@ class ClientAddressListBloc extends Bloc<ClientAddressListEvent, ClientAddressLi
   ClientAddressListBloc(this.addressUseCases,this.authusecases) : super(ClientAddressListState()) {
     on<GetUserAddress>(_onGetUserAddress);
     on<ChangedRadioValue>(_onChangedRadioValue);
+    on<SetAddressSessions>(_onSetAddressSessions); 
   }
 
   Future<void> _onGetUserAddress(GetUserAddress event,Emitter<ClientAddressListState> emit,) async {
@@ -40,6 +42,22 @@ class ClientAddressListBloc extends Bloc<ClientAddressListEvent, ClientAddressLi
         radioValue: event.radioValue
       )
     );
+    
+  }
+
+  Future<void> _onSetAddressSessions(SetAddressSessions event,Emitter<ClientAddressListState> emit,) async {
+    Address? addressSession = await addressUseCases.getAddressSession.run();
+    if(addressSession != null){
+      int index = event.addressList.indexWhere((address)=>address.id == addressSession.id);
+      if(index != -1){//ya hemos seleccionado una direccion y esta guaardada en sesion
+        emit(
+          state.copyWith(
+            radioValue: index
+          )
+        );
+      }
+    }
+    
     
   }
 

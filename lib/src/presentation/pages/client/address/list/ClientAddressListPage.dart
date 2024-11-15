@@ -62,6 +62,7 @@ class _ClientAddressListPageState extends State<ClientAddressListPage> {
             final responseState = state.response;
            if(responseState is Success){ 
             List<Address> address = responseState.data as List<Address>;
+            _bloc?.add(SetAddressSessions(addressList: address));
             return ListView.builder(
               itemCount: address.length,
               itemBuilder: (context, index){

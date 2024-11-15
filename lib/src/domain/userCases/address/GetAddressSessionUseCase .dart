@@ -1,10 +1,10 @@
 import 'package:ecommerce_flutter/src/domain/repository/AddressRepository.dart';
 
-class GetAddressSesionUseCase {
+class GetAddressSessionUseCase  {
   AddressRepository addressRepository;
 
 
-  GetAddressSesionUseCase(this.addressRepository);
+  GetAddressSessionUseCase (this.addressRepository);
 
   run() => addressRepository.getAddressSession();
   

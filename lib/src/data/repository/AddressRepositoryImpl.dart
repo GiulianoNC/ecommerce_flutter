@@ -22,14 +22,14 @@ class AddressRepositoryImpl implements AddressRepository{
   }
   
   @override
-  Future<void> saveAddressSession(Address address) async{
+  Future<void> saveAddressInSession(Address address) async {
     await sharedPref.save('address', address.toJson());
   }
   
   @override
-  Future<Address?> getAddressSession()async {
-    final data= await sharedPref.read('address');
-    if(data != null){
+  Future<Address?> getAddressSession() async {
+    final data = await sharedPref.read('address');
+    if (data != null) {
       Address address = Address.fromJson(data);
       return address;
     }

@@ -7,5 +7,5 @@ class SaveAdressInSessionsUseCase{
 
   SaveAdressInSessionsUseCase(this.addressRepository);
 
-  run(Address address) => addressRepository.saveAddressSession(address);
+  run(Address address) => addressRepository.saveAddressInSession(address);
 }

@@ -32,6 +32,5 @@ class SetAddressSessions extends ClientAddressListEvent{
   const SetAddressSessions({required this.addressList});
 
   @override
-  // TODO: implement props
   List<Object?> get props => [addressList];
 }
