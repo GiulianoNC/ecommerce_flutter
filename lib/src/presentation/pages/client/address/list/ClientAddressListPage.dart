@@ -33,14 +33,20 @@ class _ClientAddressListPageState extends State<ClientAddressListPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Mis direcciones'),
+        actions: [
+          IconButton(
+            onPressed:() {Navigator.pushNamed(context, 'client/address/create'); 
+            },
+            icon: Icon(Icons.add, color: Colors.black,))
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-          Navigator.pushNamed(context, 'client/address/create');
+          Navigator.pushNamed(context, 'client/payment/form');
         },
         backgroundColor: Colors.black,
         child: Icon(
-          Icons.add,
+          Icons.check,
           color: Colors.white,
         ),
       ),
