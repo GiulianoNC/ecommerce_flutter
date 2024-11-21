@@ -1,3 +1,6 @@
+import 'package:ecommerce_flutter/src/domain/models/MercadoPagoIdentificationType.dart';
+import 'package:ecommerce_flutter/src/domain/userCases/mercadoPago/MercadoPagoUseCases.dart';
+import 'package:ecommerce_flutter/src/domain/utils/Resource.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/address/payment/form/bloc/ClientPaymentFormEvent.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/address/payment/form/bloc/ClientPaymentFormState.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +8,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ClientPaymentFormBloc extends Bloc<ClientPaymentFormEvent, ClientPaymentFormState>{
 
-  ClientPaymentFormBloc(): super(ClientPaymentFormState()){
+  MercadoPagoUseCases mercadoPagoUseCases;
+
+  ClientPaymentFormBloc(this.mercadoPagoUseCases): super(ClientPaymentFormState()){
     on<ClientPaymentFormInitEvent>(_onClientPaymentFormInitEvent);
     on<CreditCardChanged>(_onCreditCardChanged);
     on<FormSubmit>(_onFormSubmit);
@@ -16,8 +21,25 @@ class ClientPaymentFormBloc extends Bloc<ClientPaymentFormEvent, ClientPaymentFo
 
   Future<void> _onClientPaymentFormInitEvent(ClientPaymentFormInitEvent event,Emitter<ClientPaymentFormState> emit,) async {
     emit(
-      state.copyWith(formKey: formKey)
+      state.copyWith(
+        formKey: formKey
+      )
     );
+
+    Resource response = await mercadoPagoUseCases.getIdentificationTypes.run();
+    if(response is Success){
+      List<MercadoPagoIdentificationType> identificationType = response.data;
+      identificationType.forEach((id){
+        print('Identification: ${id.toJson()}');
+      });
+      emit(
+        state.copyWith(
+          identificationTypes: identificationType,
+          formKey: formKey
+        )
+      );
+    }
+
   }
 
   Future<void> _onCreditCardChanged(CreditCardChanged event,Emitter<ClientPaymentFormState> emit,) async {

@@ -1,3 +1,5 @@
+import 'package:ecommerce_flutter/src/domain/models/MercadoPagoIdentificationType.dart';
+import 'package:ecommerce_flutter/src/domain/utils/Resource.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +11,8 @@ class ClientPaymentFormState extends Equatable{
   final String cvvCode;
   final bool isCvvFocused;
   final GlobalKey<FormState>? formKey;
+  //final Resource? responseIdentificationTypes;
+  final List<MercadoPagoIdentificationType> identificationTypes;
 
   const ClientPaymentFormState({
     this.cardNumber ="",
@@ -16,7 +20,9 @@ class ClientPaymentFormState extends Equatable{
     this.cardHolderName ="",
     this.cvvCode ="",
     this.isCvvFocused =false,
-    this.formKey
+    this.formKey,
+    this.identificationTypes =const []
+    //this.responseIdentificationTypes
   });
 
 
@@ -26,7 +32,9 @@ class ClientPaymentFormState extends Equatable{
     String? cardHolderName,
     String? cvvCode,
     bool? isCvvFocused,
-    GlobalKey<FormState>? formKey
+    List<MercadoPagoIdentificationType>? identificationTypes,
+    GlobalKey<FormState>? formKey,
+    //Resource? responseIdentificationTypes
   }){
     return ClientPaymentFormState(
       cardNumber: cardNumber ?? this.cardNumber,
@@ -34,11 +42,13 @@ class ClientPaymentFormState extends Equatable{
       cardHolderName: cardHolderName ?? this.cardHolderName,
       cvvCode: cvvCode ?? this.cvvCode,
       isCvvFocused: isCvvFocused ?? this.isCvvFocused,
+      identificationTypes: identificationTypes ?? this.identificationTypes,
+      //responseIdentificationTypes: responseIdentificationTypes ?? this.responseIdentificationTypes,
       formKey: formKey
     );
   }
 
   @override
   // TODO: implement props
-  List<Object?> get props => [cardNumber,expiredDate,cardHolderName, cvvCode,isCvvFocused];
+  List<Object?> get props => [cardNumber,expiredDate,cardHolderName, cvvCode,isCvvFocused,identificationTypes];
 }

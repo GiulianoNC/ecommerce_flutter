@@ -1,5 +1,6 @@
 import 'package:ecommerce_flutter/injection.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/address/AddressUseCases.dart';
+import 'package:ecommerce_flutter/src/domain/userCases/mercadoPago/MercadoPagoUseCases.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/products/ProductstUseCases.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/auth/AuthUseCases.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/categories/CategoriesUseCases.dart';
@@ -54,6 +55,6 @@ List<BlocProvider> blocProviders =[
   BlocProvider<ClientShoppingBagBloc>(create: (context) => ClientShoppingBagBloc(locator<ShoppingBagUseCases>())),
   BlocProvider<ClientAddressCreateBloc>(create: (context) => ClientAddressCreateBloc(locator<AddressUseCases>(),locator<Authusecases>())..add(ClientAddressCreateInitEvent())),
   BlocProvider<ClientAddressListBloc>(create: (context) => ClientAddressListBloc(locator<AddressUseCases>(),locator<Authusecases>())),
-  BlocProvider<ClientPaymentFormBloc>(create: (context) => ClientPaymentFormBloc()..add(ClientPaymentFormInitEvent())),
+  BlocProvider<ClientPaymentFormBloc>(create: (context) => ClientPaymentFormBloc(locator<MercadoPagoUseCases>())..add(ClientPaymentFormInitEvent())),
 
 ];

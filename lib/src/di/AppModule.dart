@@ -1,5 +1,6 @@
 
 import 'package:ecommerce_flutter/src/data/dataSource/local/SharedPref.dart';
+import 'package:ecommerce_flutter/src/data/dataSource/remote/MercadoPagoService.dart';
 import 'package:ecommerce_flutter/src/data/dataSource/remote/services/AddressService.dart';
 import 'package:ecommerce_flutter/src/data/dataSource/remote/services/AuthService.dart';
 import 'package:ecommerce_flutter/src/data/dataSource/remote/services/CategoriesService.dart';
@@ -7,10 +8,12 @@ import 'package:ecommerce_flutter/src/data/dataSource/remote/services/ProductSer
 import 'package:ecommerce_flutter/src/data/dataSource/remote/services/UsersService.dart';
 import 'package:ecommerce_flutter/src/data/repository/AddressRepositoryImpl.dart';
 import 'package:ecommerce_flutter/src/data/repository/CategoriesRepositoryImpl.dart';
+import 'package:ecommerce_flutter/src/data/repository/MercadoPagoRespositoryImpl.dart';
 import 'package:ecommerce_flutter/src/data/repository/ShoppingBagREpositoryImpl.dart';
 import 'package:ecommerce_flutter/src/data/repository/UsersRepositoryImpl.dart';
 import 'package:ecommerce_flutter/src/domain/models/AuthResponse.dart';
 import 'package:ecommerce_flutter/src/domain/repository/AddressRepository.dart';
+import 'package:ecommerce_flutter/src/domain/repository/MercadoPagoRespository.dart';
 import 'package:ecommerce_flutter/src/domain/repository/ShoppingBagRepository.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/address/AddressUseCases.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/address/CreateAddressUseCase.dart';
@@ -19,6 +22,8 @@ import 'package:ecommerce_flutter/src/domain/userCases/address/DeleteAddressUseC
 import 'package:ecommerce_flutter/src/domain/userCases/address/GetAddressSessionUseCase%20.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/address/GetUserAddressUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/address/SaveAdressInSessionsUseCase.dart';
+import 'package:ecommerce_flutter/src/domain/userCases/mercadoPago/GetIdentificationTypesUseCase.dart';
+import 'package:ecommerce_flutter/src/domain/userCases/mercadoPago/MercadoPagoUseCases.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/products/CreateProductUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/products/DeleteProductUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/products/GetProductsByCategoryUseCase.dart';
@@ -90,10 +95,16 @@ abstract class Appmodule {
   ProductService get productService => ProductService(token);
 
   @injectable
+  MercadoPagoService get mercadoPagoService => MercadoPagoService(token);
+
+  @injectable
   AddressService get addressService => AddressService(token);
 
   @injectable
   AddressRepository get addressRepository => AddressRepositoryImpl(addressService,sharedPred);
+
+   @injectable
+  MercadoPagoRepository get mercadoPagoRespository => MercadoPagoRepoositoryImpl(mercadoPagoService);
 
   @injectable
   ProductsRepository get productsRepository => ProductsRepositoryImpl(productService);
@@ -149,5 +160,10 @@ abstract class Appmodule {
     getAddressSession: GetAddressSessionUseCase (addressRepository),
     delete: DeleteAddressUseCase(addressRepository),
     deleteFromSession: DeleteAddressFromSessionUseCase(addressRepository)
+  );
+
+  @injectable
+  MercadoPagoUseCases get mercadoPagousecases => MercadoPagoUseCases(
+    getIdentificationTypes:GetIdentificationTypesUseCase(mercadoPagoRespository)
   );
 }
