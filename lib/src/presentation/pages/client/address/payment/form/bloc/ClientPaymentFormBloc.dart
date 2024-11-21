@@ -13,6 +13,8 @@ class ClientPaymentFormBloc extends Bloc<ClientPaymentFormEvent, ClientPaymentFo
   ClientPaymentFormBloc(this.mercadoPagoUseCases): super(ClientPaymentFormState()){
     on<ClientPaymentFormInitEvent>(_onClientPaymentFormInitEvent);
     on<CreditCardChanged>(_onCreditCardChanged);
+    on<IdentificationTypeChanged>(_onIdentificationTypeChanged);
+    on<IdentificationNumberChanged>(_onIdentificationNumberChanged);
     on<FormSubmit>(_onFormSubmit);
   }
 
@@ -60,7 +62,27 @@ class ClientPaymentFormBloc extends Bloc<ClientPaymentFormEvent, ClientPaymentFo
     print('expiredDate ${state.expiredDate}');
     print('cardHolderName ${state.cardHolderName}');
     print('cvvCode ${state.cvvCode}');
+    print('identification type ${state.identificationType}');
+    print('identification numer ${state.identificationNumber}');
 
+  }
+
+  Future<void> _onIdentificationTypeChanged(IdentificationTypeChanged event,Emitter<ClientPaymentFormState> emit,) async {
+    emit(
+        state.copyWith(
+          identificationType: event.identificationType,
+          formKey: formKey
+        )
+      );
+  }
+
+  Future<void> _onIdentificationNumberChanged(IdentificationNumberChanged event,Emitter<ClientPaymentFormState> emit,) async {  
+    emit(
+      state.copyWith(
+        identificationNumber: event.identificationNumber,
+        formKey: formKey
+      )
+    );  
   }
 
 }

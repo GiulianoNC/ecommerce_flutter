@@ -9,6 +9,8 @@ class ClientPaymentFormState extends Equatable{
   final String expiredDate;
   final String cardHolderName;
   final String cvvCode;
+  final String? identificationType;
+  final String identificationNumber;
   final bool isCvvFocused;
   final GlobalKey<FormState>? formKey;
   //final Resource? responseIdentificationTypes;
@@ -19,6 +21,8 @@ class ClientPaymentFormState extends Equatable{
     this.expiredDate ="",
     this.cardHolderName ="",
     this.cvvCode ="",
+    this.identificationType,
+    this.identificationNumber="",
     this.isCvvFocused =false,
     this.formKey,
     this.identificationTypes =const []
@@ -34,6 +38,8 @@ class ClientPaymentFormState extends Equatable{
     bool? isCvvFocused,
     List<MercadoPagoIdentificationType>? identificationTypes,
     GlobalKey<FormState>? formKey,
+    String? identificationType,
+    String? identificationNumber
     //Resource? responseIdentificationTypes
   }){
     return ClientPaymentFormState(
@@ -43,6 +49,8 @@ class ClientPaymentFormState extends Equatable{
       cvvCode: cvvCode ?? this.cvvCode,
       isCvvFocused: isCvvFocused ?? this.isCvvFocused,
       identificationTypes: identificationTypes ?? this.identificationTypes,
+      identificationType: identificationType ?? this.identificationType,
+      identificationNumber: identificationNumber ?? this.identificationNumber,
       //responseIdentificationTypes: responseIdentificationTypes ?? this.responseIdentificationTypes,
       formKey: formKey
     );
@@ -50,5 +58,5 @@ class ClientPaymentFormState extends Equatable{
 
   @override
   // TODO: implement props
-  List<Object?> get props => [cardNumber,expiredDate,cardHolderName, cvvCode,isCvvFocused,identificationTypes];
+  List<Object?> get props => [cardNumber,expiredDate,cardHolderName, cvvCode,isCvvFocused,identificationTypes,identificationType,identificationNumber];
 }
