@@ -1,9 +1,9 @@
 
 import 'package:ecommerce_flutter/src/data/dataSource/local/SharedPref.dart';
-import 'package:ecommerce_flutter/src/data/dataSource/remote/MercadoPagoService.dart';
 import 'package:ecommerce_flutter/src/data/dataSource/remote/services/AddressService.dart';
 import 'package:ecommerce_flutter/src/data/dataSource/remote/services/AuthService.dart';
 import 'package:ecommerce_flutter/src/data/dataSource/remote/services/CategoriesService.dart';
+import 'package:ecommerce_flutter/src/data/dataSource/remote/services/MercadoPagoService.dart';
 import 'package:ecommerce_flutter/src/data/dataSource/remote/services/ProductService.dart';
 import 'package:ecommerce_flutter/src/data/dataSource/remote/services/UsersService.dart';
 import 'package:ecommerce_flutter/src/data/repository/AddressRepositoryImpl.dart';
@@ -22,7 +22,9 @@ import 'package:ecommerce_flutter/src/domain/userCases/address/DeleteAddressUseC
 import 'package:ecommerce_flutter/src/domain/userCases/address/GetAddressSessionUseCase%20.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/address/GetUserAddressUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/address/SaveAdressInSessionsUseCase.dart';
+import 'package:ecommerce_flutter/src/domain/userCases/mercadoPago/CreateCardTokenUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/mercadoPago/GetIdentificationTypesUseCase.dart';
+import 'package:ecommerce_flutter/src/domain/userCases/mercadoPago/GetInstallmentsUSeCase.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/mercadoPago/MercadoPagoUseCases.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/products/CreateProductUseCase.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/products/DeleteProductUseCase.dart';
@@ -164,6 +166,8 @@ abstract class Appmodule {
 
   @injectable
   MercadoPagoUseCases get mercadoPagousecases => MercadoPagoUseCases(
-    getIdentificationTypes:GetIdentificationTypesUseCase(mercadoPagoRespository)
+    getIdentificationTypes:GetIdentificationTypesUseCase(mercadoPagoRespository),
+    createCardTokenUseCase: CreateCardTokenUseCase(mercadoPagoRespository),
+    getInstallmentsUSeCase: GetInstallmentsUSeCase(mercadoPagoRespository)
   );
 }

@@ -58,15 +58,15 @@ class _ClientCategoryListPageState extends State<ClientCategoryListPage> {
         child:BlocBuilder<ClientCategoryListBloc,ClientCategoryListState>(
           builder: (context,state){
             final responseState = state.response;
-           if(responseState is Success){ 
-            List<Category> categories = responseState.data as List<Category>;
-            return ListView.builder(
-              itemCount: categories.length,
-              itemBuilder: (context, index){
-                return ClientCategoryListItem(_bloc, categories[index]);
-              });
-            }
-            return Container();
+              if(responseState is Success){ 
+                List<Category> categories = responseState.data as List<Category>;
+                return ListView.builder(
+                  itemCount: categories.length,
+                  itemBuilder: (context, index){
+                    return ClientCategoryListItem(_bloc, categories[index]);
+                  });
+                }
+                return Container();
           }
         ) ,
         )

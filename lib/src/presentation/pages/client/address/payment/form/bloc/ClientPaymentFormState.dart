@@ -1,3 +1,4 @@
+import 'package:ecommerce_flutter/src/domain/models/MercadoPagoCardTokenBody.dart';
 import 'package:ecommerce_flutter/src/domain/models/MercadoPagoIdentificationType.dart';
 import 'package:ecommerce_flutter/src/domain/utils/Resource.dart';
 import 'package:equatable/equatable.dart';
@@ -13,8 +14,9 @@ class ClientPaymentFormState extends Equatable{
   final String identificationNumber;
   final bool isCvvFocused;
   final GlobalKey<FormState>? formKey;
-  //final Resource? responseIdentificationTypes;
+  final Resource? response;
   final List<MercadoPagoIdentificationType> identificationTypes;
+  final double totalToPay;
 
   const ClientPaymentFormState({
     this.cardNumber ="",
@@ -25,9 +27,24 @@ class ClientPaymentFormState extends Equatable{
     this.identificationNumber="",
     this.isCvvFocused =false,
     this.formKey,
-    this.identificationTypes =const []
-    //this.responseIdentificationTypes
+    this.identificationTypes =const [],
+    this.response,
+    this.totalToPay = 0
   });
+
+  toCardTokenBody() => MercadoPagoCardTokenBody(
+    cardNumber: cardNumber.replaceAll(RegExp(' '),""), //cualquier expacio en blanco sea eliminado
+    expirationYear: '20${expiredDate.split('/')[1]}', 
+    expirationMonth: int.parse(expiredDate.split('/')[0]), 
+    securytyCode: cvvCode, 
+    cardholder: Cardholder(
+      name: cardHolderName, 
+      identification: Identification(
+        number: identificationNumber, 
+        type: identificationType ?? ""
+        )
+      )
+  );
 
 
   ClientPaymentFormState copyWith({
@@ -39,8 +56,9 @@ class ClientPaymentFormState extends Equatable{
     List<MercadoPagoIdentificationType>? identificationTypes,
     GlobalKey<FormState>? formKey,
     String? identificationType,
-    String? identificationNumber
-    //Resource? responseIdentificationTypes
+    String? identificationNumber,
+    Resource? response,
+    double? totalToPay
   }){
     return ClientPaymentFormState(
       cardNumber: cardNumber ?? this.cardNumber,
@@ -51,12 +69,13 @@ class ClientPaymentFormState extends Equatable{
       identificationTypes: identificationTypes ?? this.identificationTypes,
       identificationType: identificationType ?? this.identificationType,
       identificationNumber: identificationNumber ?? this.identificationNumber,
-      //responseIdentificationTypes: responseIdentificationTypes ?? this.responseIdentificationTypes,
-      formKey: formKey
+      response: response ?? this.response,
+      formKey: formKey,
+      totalToPay : totalToPay ?? this.totalToPay
     );
   }
 
   @override
   // TODO: implement props
-  List<Object?> get props => [cardNumber,expiredDate,cardHolderName, cvvCode,isCvvFocused,identificationTypes,identificationType,identificationNumber];
+  List<Object?> get props => [cardNumber,expiredDate,cardHolderName, cvvCode,isCvvFocused,identificationTypes,identificationType,identificationNumber,response, totalToPay];
 }

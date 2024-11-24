@@ -12,10 +12,10 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
 import 'src/data/dataSource/local/SharedPref.dart' as _i344;
-import 'src/data/dataSource/remote/MercadoPagoService.dart' as _i482;
 import 'src/data/dataSource/remote/services/AddressService.dart' as _i803;
 import 'src/data/dataSource/remote/services/AuthService.dart' as _i204;
 import 'src/data/dataSource/remote/services/CategoriesService.dart' as _i895;
+import 'src/data/dataSource/remote/services/MercadoPagoService.dart' as _i558;
 import 'src/data/dataSource/remote/services/ProductService.dart' as _i725;
 import 'src/data/dataSource/remote/services/UsersService.dart' as _i430;
 import 'src/di/AppModule.dart' as _i199;
@@ -56,7 +56,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i174.CategoriesRepository>(
         () => appmodule.categoriesRepository);
     gh.factory<_i725.ProductService>(() => appmodule.productService);
-    gh.factory<_i482.MercadoPagoService>(() => appmodule.mercadoPagoService);
+    gh.factory<_i558.MercadoPagoService>(() => appmodule.mercadoPagoService);
     gh.factory<_i803.AddressService>(() => appmodule.addressService);
     gh.factory<_i615.AddressRepository>(() => appmodule.addressRepository);
     gh.factory<_i726.MercadoPagoRepository>(

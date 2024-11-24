@@ -1,5 +1,6 @@
 import 'package:ecommerce_flutter/src/domain/models/MercadoPagoIdentificationType.dart';
 import 'package:ecommerce_flutter/src/domain/userCases/mercadoPago/MercadoPagoUseCases.dart';
+import 'package:ecommerce_flutter/src/domain/userCases/shoppingBag/ShoppingBagUseCases.dart';
 import 'package:ecommerce_flutter/src/domain/utils/Resource.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/address/payment/form/bloc/ClientPaymentFormEvent.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/address/payment/form/bloc/ClientPaymentFormState.dart';
@@ -9,8 +10,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class ClientPaymentFormBloc extends Bloc<ClientPaymentFormEvent, ClientPaymentFormState>{
 
   MercadoPagoUseCases mercadoPagoUseCases;
+  ShoppingBagUseCases shoppingBagUseCases;
 
-  ClientPaymentFormBloc(this.mercadoPagoUseCases): super(ClientPaymentFormState()){
+  ClientPaymentFormBloc(this.mercadoPagoUseCases, this.shoppingBagUseCases): super(ClientPaymentFormState()){
     on<ClientPaymentFormInitEvent>(_onClientPaymentFormInitEvent);
     on<CreditCardChanged>(_onCreditCardChanged);
     on<IdentificationTypeChanged>(_onIdentificationTypeChanged);
@@ -31,9 +33,7 @@ class ClientPaymentFormBloc extends Bloc<ClientPaymentFormEvent, ClientPaymentFo
     Resource response = await mercadoPagoUseCases.getIdentificationTypes.run();
     if(response is Success){
       List<MercadoPagoIdentificationType> identificationType = response.data;
-      identificationType.forEach((id){
-        print('Identification: ${id.toJson()}');
-      });
+      
       emit(
         state.copyWith(
           identificationTypes: identificationType,
@@ -41,6 +41,14 @@ class ClientPaymentFormBloc extends Bloc<ClientPaymentFormEvent, ClientPaymentFo
         )
       );
     }
+
+    double totalToPay = await shoppingBagUseCases.getTotal.run();
+    emit(
+        state.copyWith(
+          totalToPay: totalToPay,
+          formKey: formKey
+        )
+      );
 
   }
 
@@ -58,13 +66,19 @@ class ClientPaymentFormBloc extends Bloc<ClientPaymentFormEvent, ClientPaymentFo
   }
 
   Future<void> _onFormSubmit(FormSubmit event,Emitter<ClientPaymentFormState> emit,) async {
-    print('cardNumber ${state.cardNumber}');
-    print('expiredDate ${state.expiredDate}');
-    print('cardHolderName ${state.cardHolderName}');
-    print('cvvCode ${state.cvvCode}');
-    print('identification type ${state.identificationType}');
-    print('identification numer ${state.identificationNumber}');
-
+    print('formdata ${state.toCardTokenBody().toJson()}');
+    
+    emit(
+      state.copyWith(
+        response: Loading()
+      )
+    );
+    Resource response = await mercadoPagoUseCases.createCardTokenUseCase.run(state.toCardTokenBody()); 
+    emit(
+      state.copyWith(
+        response: response
+      )
+    );
   }
 
   Future<void> _onIdentificationTypeChanged(IdentificationTypeChanged event,Emitter<ClientPaymentFormState> emit,) async {

@@ -9,6 +9,7 @@ import 'package:ecommerce_flutter/src/presentation/pages/admin/product/update/Ad
 import 'package:ecommerce_flutter/src/presentation/pages/client/address/create/ClientAddressCreatePage.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/address/list/ClientAddressListPage.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/address/payment/form/ClientPaymentFormPage.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/client/address/payment/installments/ClientPaymentInstallmentsPage.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/home/ClientHomePage.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/product/detail/ClientProductDetailPage.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/client/product/list/ClientProductListPage.dart';
@@ -63,6 +64,7 @@ class MyApp extends StatelessWidget {
           'client/address/list':(BuildContext context) => ClientAddressListPage(),
           'client/address/create':(BuildContext context) => ClientAddressCreatePage(),
           'client/payment/form':(BuildContext context) => ClientPaymentFormPage(),
+          'client/payment/installments':(BuildContext context) => ClientPaymentInstallmentsPage(),
           
         },
       ),
