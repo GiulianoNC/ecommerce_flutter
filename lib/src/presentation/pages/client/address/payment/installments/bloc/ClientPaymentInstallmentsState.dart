@@ -4,18 +4,23 @@ import 'package:equatable/equatable.dart';
 class ClientPaymentInstallmentsState extends Equatable{
 
   final Resource? response;
+  final String? installments;
 
   ClientPaymentInstallmentsState({
-    this.response
+    this.response,
+    this.installments
   });
 
   ClientPaymentInstallmentsState copyWith({
-    Resource? response
+    Resource? response,
+    String? installments
   }){
-    return ClientPaymentInstallmentsState(response: response);
+    return ClientPaymentInstallmentsState(
+      response: response ?? this.response,
+      installments: installments ?? this.installments
+      );
   }
 
   @override
-  // TODO: implement props
-  List<Object?> get props => [response];
+  List<Object?> get props => [response, installments];
 }

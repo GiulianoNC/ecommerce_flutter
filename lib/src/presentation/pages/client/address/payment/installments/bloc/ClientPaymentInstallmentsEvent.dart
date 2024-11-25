@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 
 abstract class ClientPaymentInstallmentsEvent extends Equatable{
 
@@ -16,6 +17,13 @@ class GetInstallments extends ClientPaymentInstallmentsEvent{
   const GetInstallments({required this.firstSixDigits, required this.amount});
 
   @override
-  // TODO: implement props
   List<Object?> get props => [firstSixDigits, amount];
+}
+
+class InstallmentsChanged extends ClientPaymentInstallmentsEvent{
+  final String installment;
+  const InstallmentsChanged({required this.installment});
+  @override
+  List<Object?> get props => [installment];
+
 }
